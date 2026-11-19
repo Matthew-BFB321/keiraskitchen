@@ -2,10 +2,10 @@ import { useEffect, useId, useRef } from 'react'
 import './Sheet.css'
 
 /**
- * Bottom sheet for choosing between a few actions. Closes on Escape,
- * a tap on the backdrop, or the Cancel button (all call onClose).
+ * Bottom sheet. Closes on Escape, a tap on the backdrop, or the close
+ * button (all call onClose). Long content scrolls inside the sheet.
  */
-export default function Sheet({ open, title, onClose, children }) {
+export default function Sheet({ open, title, onClose, closeLabel = 'Cancel', children }) {
   const ref = useRef(null)
   const titleId = useId()
 
@@ -31,7 +31,7 @@ export default function Sheet({ open, title, onClose, children }) {
         <h2 id={titleId} className="sheet__title">{title}</h2>
         {children}
         <button type="button" className="sheet__cancel" onClick={onClose}>
-          Cancel
+          {closeLabel}
         </button>
       </div>
     </dialog>

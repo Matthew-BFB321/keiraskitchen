@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useRecipe } from '../lib/recipeStore.js'
+import { useCookProgress } from '../lib/cookProgress.js'
 import { formatTotalTime } from '../lib/libraryFilters.js'
 import { formatAmount, groupIngredients, scaleQuantity } from '../lib/quantities.js'
 import { findTag } from '../config/tags.js'
@@ -16,6 +17,7 @@ export default function Recipe() {
 function RecipeView({ id }) {
   const recipe = useRecipe(id)
   const [servings, setServings] = useState(recipe?.servings ?? 1)
+  const cooking = useCookProgress(id)
 
   if (!recipe) {
     return (
@@ -51,6 +53,12 @@ function RecipeView({ id }) {
           Edit
         </Link>
       </nav>
+
+      {cooking.timers.length > 0 && (
+        <Link to={`/recipe/${recipe.id}/cook?servings=${cooking.servings ?? servings}`} className="recipe__cooking-pill">
+          {cooking.timers.length} {cooking.timers.length === 1 ? 'timer' : 'timers'} running · Back to cooking
+        </Link>
+      )}
 
       {recipe.photoUrl ? (
         <img className="recipe__photo" src={recipe.photoUrl} alt="" />

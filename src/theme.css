@@ -22,6 +22,7 @@
   --color-chip: #e2e2e2;
   --color-chip-selected: #4a4a4a;
   --color-on-chip-selected: #ffffff;
+  --color-step-current: #4a4a4a;   /* cook mode: border on the current step */
 
   /* Shadows */
   --shadow-sheet: 0 -4px 24px rgba(0, 0, 0, 0.15);
@@ -33,6 +34,7 @@
   --font-size-md: 1rem;
   --font-size-lg: 1.25rem;
   --font-size-xl: 1.5rem;
+  --font-size-cook: 1.25rem;      /* cook mode step text, 20px */
   --font-weight-normal: 400;
   --font-weight-bold: 600;
   --line-height: 1.5;

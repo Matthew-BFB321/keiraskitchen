@@ -76,6 +76,27 @@
   background: var(--color-surface);
 }
 
+.recipe__cooking-pill {
+  align-self: center;
+  display: flex;
+  align-items: center;
+  min-height: var(--tap-min);
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-lg);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+  transition: transform var(--press-duration) ease-out,
+    background-color var(--press-duration) ease-out;
+}
+
+.recipe__cooking-pill:active {
+  transform: scale(var(--press-scale));
+  background: var(--color-primary-pressed);
+}
+
 .recipe__photo {
   width: 100%;
   aspect-ratio: 16 / 9;

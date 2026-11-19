@@ -1,0 +1,373 @@
+/* Cook mode: 56px tap targets (--tap-min-cook) and 20px step text throughout */
+
+.cook {
+  /* Room so the fixed bottom bar never covers the last step */
+  padding-bottom: calc(var(--tap-min-cook) * 2 + var(--space-6) + env(safe-area-inset-bottom));
+}
+
+.cook--missing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  min-height: 100dvh;
+  padding: var(--space-4);
+  text-align: center;
+}
+
+.cook__missing-title {
+  margin: 0;
+  font-size: var(--font-size-xl);
+}
+
+.cook__muted {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+/* Top bar + timer bar stay pinned while the steps scroll */
+.cook__header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--color-bg);
+  box-shadow: 0 1px 0 var(--color-border);
+}
+
+.cook__topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-2);
+}
+
+.cook__progress {
+  margin: 0;
+  font-weight: var(--font-weight-bold);
+  white-space: nowrap;
+}
+
+.cook__bar-button,
+.cook__icon-button {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--tap-min-cook);
+  min-height: var(--tap-min-cook);
+  padding: 0 var(--space-3);
+  border: none;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--color-text);
+  font: inherit;
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform var(--press-duration) ease-out,
+    background-color var(--press-duration) ease-out;
+}
+
+.cook__icon-button {
+  padding: 0;
+}
+
+.cook__bar-button:active,
+.cook__icon-button:active {
+  transform: scale(var(--press-scale));
+  background: var(--color-surface-pressed);
+}
+
+/* Timer bar */
+.cook__timers {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0 var(--space-2) var(--space-2);
+  list-style: none;
+}
+
+.cook__timer {
+  display: flex;
+  align-items: center;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.cook__timer--done {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.cook__timer--done .cook__icon-button {
+  color: var(--color-on-primary);
+}
+
+.cook__timer-label {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--tap-min-cook);
+  padding: 0 var(--space-3);
+  border: none;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: transform var(--press-duration) ease-out,
+    background-color var(--press-duration) ease-out;
+}
+
+.cook__timer-label:active {
+  transform: scale(var(--press-scale));
+  background: var(--color-surface-pressed);
+}
+
+.cook__timer-step {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--font-size-sm);
+}
+
+.cook__timer-time {
+  flex: none;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
+}
+
+.cook__timer-paused {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+}
+
+/* Steps */
+.cook__steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin: 0;
+  padding: var(--space-4);
+  list-style: none;
+}
+
+.cook__step {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border: 3px solid transparent;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  cursor: pointer;
+  transition: transform var(--press-duration) ease-out,
+    background-color var(--press-duration) ease-out;
+}
+
+.cook__step:active {
+  background: var(--color-surface-pressed);
+}
+
+.cook__step--current {
+  border-color: var(--color-step-current);
+}
+
+.cook__step--done {
+  opacity: 0.55;
+}
+
+.cook__tick {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--tap-min-cook);
+  height: var(--tap-min-cook);
+  padding: 0;
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-primary);
+  cursor: pointer;
+  transition: transform var(--press-duration) ease-out,
+    background-color var(--press-duration) ease-out;
+}
+
+.cook__tick:active {
+  transform: scale(var(--press-scale));
+  background: var(--color-surface-pressed);
+}
+
+.cook__tick[aria-checked='true'] {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.cook__tick--small {
+  width: 36px;
+  height: 36px;
+}
+
+.cook__step-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.cook__step-number {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-muted);
+}
+
+.cook__step-text {
+  margin: 0;
+  font-size: var(--font-size-cook);
+  line-height: 1.45;
+}
+
+.cook__start-timer {
+  align-self: flex-start;
+  min-height: var(--tap-min-cook);
+  padding: 0 var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-chip);
+  color: var(--color-text);
+  font: inherit;
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  transition: transform var(--press-duration) ease-out,
+    background-color var(--press-duration) ease-out;
+}
+
+.cook__start-timer:active {
+  transform: scale(var(--press-scale));
+  background: var(--color-surface-pressed);
+}
+
+/* Bottom bar */
+.cook__bottom {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: var(--space-3) var(--space-4) calc(var(--space-3) + env(safe-area-inset-bottom));
+  background: var(--color-bg);
+  box-shadow: var(--shadow-sheet);
+}
+
+.cook__finished {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  text-align: center;
+}
+
+.cook__finished-text {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+}
+
+.cook__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: var(--tap-min-cook);
+  padding: var(--space-2) var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform var(--press-duration) ease-out,
+    background-color var(--press-duration) ease-out;
+}
+
+.cook--missing .cook__button {
+  width: auto;
+}
+
+.cook__button:active {
+  transform: scale(var(--press-scale));
+  background: var(--color-surface-pressed);
+}
+
+.cook__button--primary {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font-size: var(--font-size-lg);
+}
+
+.cook__button--primary:active {
+  background: var(--color-primary-pressed);
+}
+
+/* Ingredients sheet (rendered inside .cook, so these apply) */
+.cook .sheet__cancel {
+  min-height: var(--tap-min-cook);
+  font-size: var(--font-size-lg);
+}
+
+.cook__group {
+  margin: var(--space-3) 0 var(--space-1);
+  font-size: var(--font-size-md);
+  color: var(--color-text-muted);
+}
+
+.cook__ingredients {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cook__ingredient {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: var(--tap-min-cook);
+  padding: var(--space-1) 0;
+  border: none;
+  border-bottom: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text);
+  font: inherit;
+  font-size: var(--font-size-lg);
+  text-align: left;
+  cursor: pointer;
+  transition: transform var(--press-duration) ease-out,
+    background-color var(--press-duration) ease-out;
+}
+
+.cook__ingredient:active {
+  background: var(--color-surface-pressed);
+}
+
+.cook__ingredient--got {
+  opacity: 0.55;
+}
+
+.cook__ingredient--got .cook__tick {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}

@@ -1,0 +1,5 @@
+/* The alarm can appear on any screen while her hands are busy: cook-mode size button */
+.timer-alarm .dialog__button {
+  min-height: var(--tap-min-cook);
+  font-size: var(--font-size-lg);
+}

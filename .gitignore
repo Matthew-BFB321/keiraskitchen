@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+dev-dist/
+
+# Environment files
+.env
+.env.*
+
+# Logs and OS / editor clutter
+*.log
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json

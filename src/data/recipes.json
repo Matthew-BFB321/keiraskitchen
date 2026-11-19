@@ -1,0 +1,826 @@
+{
+  "schemaVersion": 1,
+  "recipes": [
+    {
+      "id": "f4c094ed-559b-4ce2-ab2c-b70eb46ef6a0",
+      "title": "Bobotie",
+      "description": "Spiced Cape Malay mince bake with a golden egg custard topping.",
+      "servings": 6,
+      "prepMin": 20,
+      "cookMin": 50,
+      "tags": [
+        "dinner",
+        "south african",
+        "beef",
+        "oven bake"
+      ],
+      "photoUrl": null,
+      "notes": "Serve with yellow rice and chutney. Freezes well before the topping goes on.",
+      "isFavourite": true,
+      "ingredients": [
+        {
+          "id": "649395e8-919f-4b80-8c5d-165d0a34ef0f",
+          "position": 1,
+          "quantity": 2,
+          "unit": "tbsp",
+          "item": "sunflower oil",
+          "note": null
+        },
+        {
+          "id": "c7f7163a-f5b6-4641-a909-9d243f8a9639",
+          "position": 2,
+          "quantity": 2,
+          "unit": null,
+          "item": "onions",
+          "note": "finely chopped"
+        },
+        {
+          "id": "13c131a1-16ed-4095-9fc0-7f242966c6e1",
+          "position": 3,
+          "quantity": 2,
+          "unit": null,
+          "item": "garlic cloves",
+          "note": "crushed"
+        },
+        {
+          "id": "81ec55cb-8735-4750-8b5f-ea7aece857db",
+          "position": 4,
+          "quantity": 1,
+          "unit": "kg",
+          "item": "beef mince",
+          "note": null
+        },
+        {
+          "id": "dc1bfb39-08b3-4892-a652-f13efff7be14",
+          "position": 5,
+          "quantity": 2,
+          "unit": "tbsp",
+          "item": "mild curry powder",
+          "note": null
+        },
+        {
+          "id": "8a33457f-827d-495b-8334-e5a7c2e67922",
+          "position": 6,
+          "quantity": 1,
+          "unit": "tsp",
+          "item": "ground turmeric",
+          "note": null
+        },
+        {
+          "id": "0f2142b4-b687-4b5c-a598-5239ea9e2fbd",
+          "position": 7,
+          "quantity": 2,
+          "unit": null,
+          "item": "slices white bread",
+          "note": "crusts removed"
+        },
+        {
+          "id": "37f3e18a-408c-4759-be90-7a39457cee21",
+          "position": 8,
+          "quantity": 375,
+          "unit": "ml",
+          "item": "full-cream milk",
+          "note": "divided"
+        },
+        {
+          "id": "b0f05fb8-bb28-4c68-95ed-52e3f39170dc",
+          "position": 9,
+          "quantity": 3,
+          "unit": "tbsp",
+          "item": "fruit chutney",
+          "note": null
+        },
+        {
+          "id": "b8dde901-4f24-4b43-807f-9556852bd4cf",
+          "position": 10,
+          "quantity": 2,
+          "unit": "tbsp",
+          "item": "apricot jam",
+          "note": null
+        },
+        {
+          "id": "6617bc09-0a5b-4e91-8615-17a0d4b3e657",
+          "position": 11,
+          "quantity": 60,
+          "unit": "g",
+          "item": "sultanas",
+          "note": null
+        },
+        {
+          "id": "3739c115-96ba-47d2-8832-b83e167ce803",
+          "position": 12,
+          "quantity": 2,
+          "unit": "tbsp",
+          "item": "lemon juice",
+          "note": null
+        },
+        {
+          "id": "3771ba61-c476-4979-b2c9-faf485a93dae",
+          "position": 13,
+          "quantity": 1.5,
+          "unit": "tsp",
+          "item": "salt",
+          "note": null
+        },
+        {
+          "id": "1a402054-f3ea-4654-a04b-c0ebdf3e3265",
+          "position": 14,
+          "quantity": 3,
+          "unit": null,
+          "item": "eggs",
+          "note": null
+        },
+        {
+          "id": "37df1e9a-8c84-4f6a-bb47-594eb44740a1",
+          "position": 15,
+          "quantity": 4,
+          "unit": null,
+          "item": "bay leaves",
+          "note": null
+        }
+      ],
+      "steps": [
+        {
+          "id": "bb19c538-8326-4881-9285-d1b34a5fc01d",
+          "position": 1,
+          "text": "Preheat the oven to 180 °C and grease a 20 × 30 cm ovenproof dish.",
+          "timerSeconds": null
+        },
+        {
+          "id": "ef34a3a9-2746-4d33-a210-5531bbb69155",
+          "position": 2,
+          "text": "Soak the bread in 125 ml of the milk while you start the mince.",
+          "timerSeconds": null
+        },
+        {
+          "id": "d0fe3707-be10-45fd-a316-70620ab30892",
+          "position": 3,
+          "text": "Heat the oil in a large pan and fry the onions until soft and golden.",
+          "timerSeconds": 480
+        },
+        {
+          "id": "3782f0ec-9bb3-4c1e-9699-1310ccfa7d31",
+          "position": 4,
+          "text": "Add the garlic, curry powder and turmeric and fry for 1 minute until fragrant.",
+          "timerSeconds": 60
+        },
+        {
+          "id": "5130db5e-c0ac-40f0-b72c-df7c62e1544c",
+          "position": 5,
+          "text": "Add the mince and brown it, breaking it up with a wooden spoon.",
+          "timerSeconds": 600
+        },
+        {
+          "id": "bf4cea34-85d1-4590-8a9e-2aa24043c255",
+          "position": 6,
+          "text": "Squeeze the milk out of the bread (keep the milk) and mash the bread into the mince with the chutney, jam, sultanas, lemon juice and salt.",
+          "timerSeconds": null
+        },
+        {
+          "id": "60451cc7-f4c1-4bdc-bf58-db92d327f05c",
+          "position": 7,
+          "text": "Spoon the mince into the dish and level the top.",
+          "timerSeconds": null
+        },
+        {
+          "id": "11b7e8d6-ca5a-4ace-8f8d-7ee3a615c796",
+          "position": 8,
+          "text": "Whisk the eggs with the remaining 250 ml milk plus the squeezed-out milk. Pour over the mince and tuck the bay leaves into the top.",
+          "timerSeconds": null
+        },
+        {
+          "id": "9c623aee-23a6-4e86-9103-6cbc633d0bff",
+          "position": 9,
+          "text": "Bake until the custard is set and golden.",
+          "timerSeconds": 2100
+        }
+      ]
+    },
+    {
+      "id": "3b685710-33e4-41a2-b5cc-ce23a4f8cd47",
+      "title": "Malva Pudding",
+      "description": "Soft, sticky apricot sponge soaked in a hot buttery cream sauce.",
+      "servings": 8,
+      "prepMin": 15,
+      "cookMin": 40,
+      "tags": [
+        "dessert",
+        "south african",
+        "baking"
+      ],
+      "photoUrl": null,
+      "notes": "Best warm with custard or vanilla ice cream.",
+      "isFavourite": true,
+      "ingredients": [
+        {
+          "id": "3a68201b-839c-4639-9350-6c73004075c7",
+          "position": 1,
+          "quantity": 200,
+          "unit": "g",
+          "item": "castor sugar",
+          "note": null
+        },
+        {
+          "id": "f393abd8-8279-406f-802e-24c11aae4148",
+          "position": 2,
+          "quantity": 2,
+          "unit": null,
+          "item": "eggs",
+          "note": null
+        },
+        {
+          "id": "4d29449a-c9ae-48bb-96ba-4780da78e956",
+          "position": 3,
+          "quantity": 1,
+          "unit": "tbsp",
+          "item": "smooth apricot jam",
+          "note": null
+        },
+        {
+          "id": "805bd6b5-50ed-490b-9e6b-bf683feefa16",
+          "position": 4,
+          "quantity": 140,
+          "unit": "g",
+          "item": "cake flour",
+          "note": null
+        },
+        {
+          "id": "27ed1877-b184-43e9-b5f4-b3aa80ac541c",
+          "position": 5,
+          "quantity": 1,
+          "unit": "tsp",
+          "item": "bicarbonate of soda",
+          "note": null
+        },
+        {
+          "id": "a87ae4d6-ad2f-4eb8-af8d-93d25dcbe948",
+          "position": 6,
+          "quantity": 0.25,
+          "unit": "tsp",
+          "item": "salt",
+          "note": null
+        },
+        {
+          "id": "7b3c8da9-62bf-4109-a134-ffa5dd6fbf91",
+          "position": 7,
+          "quantity": 30,
+          "unit": "g",
+          "item": "butter",
+          "note": "melted"
+        },
+        {
+          "id": "afcf30ac-8a4a-4e72-bd2a-2f8fab12dde8",
+          "position": 8,
+          "quantity": 1,
+          "unit": "tsp",
+          "item": "white vinegar",
+          "note": null
+        },
+        {
+          "id": "cdb659c5-8614-43a3-9802-85610ab76781",
+          "position": 9,
+          "quantity": 250,
+          "unit": "ml",
+          "item": "milk",
+          "note": null
+        },
+        {
+          "id": "c266a38e-f709-4889-b019-b7c85ddfd501",
+          "position": 10,
+          "quantity": 250,
+          "unit": "ml",
+          "item": "fresh cream",
+          "note": "for the sauce"
+        },
+        {
+          "id": "a1777c79-87d7-4275-b394-6d66ca961b57",
+          "position": 11,
+          "quantity": 125,
+          "unit": "g",
+          "item": "butter",
+          "note": "for the sauce"
+        },
+        {
+          "id": "7108a6c4-3a2f-4ff8-baa7-2f3763dbc4cc",
+          "position": 12,
+          "quantity": 150,
+          "unit": "g",
+          "item": "sugar",
+          "note": "for the sauce"
+        },
+        {
+          "id": "9be60b7c-693f-450e-8305-e08980e1fa80",
+          "position": 13,
+          "quantity": 125,
+          "unit": "ml",
+          "item": "hot water",
+          "note": "for the sauce"
+        }
+      ],
+      "steps": [
+        {
+          "id": "3481df28-f247-4237-a586-9e8be0db516c",
+          "position": 1,
+          "text": "Preheat the oven to 180 °C and grease a 20 × 20 cm ovenproof dish.",
+          "timerSeconds": null
+        },
+        {
+          "id": "d9f8fe10-5637-4f38-9fab-faaf17d07bbc",
+          "position": 2,
+          "text": "Beat the castor sugar and eggs until thick and pale, then beat in the jam.",
+          "timerSeconds": 300
+        },
+        {
+          "id": "70eb3d7b-b442-415e-9019-4d2a06b6aa04",
+          "position": 3,
+          "text": "Sift together the flour, bicarbonate of soda and salt.",
+          "timerSeconds": null
+        },
+        {
+          "id": "a54d0bd8-27f1-47a3-b437-6e9ab12b08dc",
+          "position": 4,
+          "text": "Mix the melted butter, vinegar and milk.",
+          "timerSeconds": null
+        },
+        {
+          "id": "d09a8ed7-2ffb-4413-9d58-a093de340be8",
+          "position": 5,
+          "text": "Fold the flour and milk mixtures into the egg mixture alternately until smooth.",
+          "timerSeconds": null
+        },
+        {
+          "id": "b4a712df-ce2d-486d-b53c-d6180980ddf2",
+          "position": 6,
+          "text": "Pour into the dish and bake until risen and deep brown.",
+          "timerSeconds": 2400
+        },
+        {
+          "id": "0072e8ee-505f-42e4-a134-155f5e904552",
+          "position": 7,
+          "text": "Near the end of baking, heat the cream, butter, sugar and hot water in a saucepan until the butter melts and the sugar dissolves.",
+          "timerSeconds": null
+        },
+        {
+          "id": "117bc7c6-3a26-47f5-9805-b49f2c74a508",
+          "position": 8,
+          "text": "As soon as the pudding comes out, prick it all over with a skewer and pour the hot sauce over slowly so it soaks in.",
+          "timerSeconds": null
+        },
+        {
+          "id": "941ffc4c-ab1a-4ac4-9b3c-659caf760007",
+          "position": 9,
+          "text": "Leave to stand before serving.",
+          "timerSeconds": 600
+        }
+      ]
+    },
+    {
+      "id": "0fd8649a-2876-4ab7-86b7-6713c2e96d36",
+      "title": "Lemon & Herb Chicken Traybake",
+      "description": "One-tray chicken thighs with baby potatoes, red onion and peppers.",
+      "servings": 4,
+      "prepMin": 15,
+      "cookMin": 45,
+      "tags": [
+        "dinner",
+        "chicken",
+        "weeknight",
+        "one tray"
+      ],
+      "photoUrl": null,
+      "notes": "Bone-in thighs stay juiciest. Check they read 75 °C at the thickest part.",
+      "isFavourite": false,
+      "ingredients": [
+        {
+          "id": "b22b57b4-8e15-4986-b625-4cf1ed9b17c4",
+          "position": 1,
+          "quantity": 8,
+          "unit": null,
+          "item": "chicken thighs",
+          "note": "bone-in, skin on"
+        },
+        {
+          "id": "58c7b166-37af-4e9e-89ac-06ad7c61960b",
+          "position": 2,
+          "quantity": 750,
+          "unit": "g",
+          "item": "baby potatoes",
+          "note": "halved"
+        },
+        {
+          "id": "91d9210b-4ec4-407b-8844-7acb81aa960b",
+          "position": 3,
+          "quantity": 2,
+          "unit": null,
+          "item": "red onions",
+          "note": "cut into wedges"
+        },
+        {
+          "id": "e985f8d8-8f09-4610-b616-7b1a2278cc64",
+          "position": 4,
+          "quantity": 2,
+          "unit": null,
+          "item": "peppers",
+          "note": "any colour, cut into chunks"
+        },
+        {
+          "id": "c456791b-b33d-42bd-b912-a11652afe994",
+          "position": 5,
+          "quantity": 4,
+          "unit": "tbsp",
+          "item": "olive oil",
+          "note": null
+        },
+        {
+          "id": "77a3f537-07c4-4b2e-acd7-e8b36d6f7826",
+          "position": 6,
+          "quantity": 1,
+          "unit": null,
+          "item": "lemon",
+          "note": "zest and juice"
+        },
+        {
+          "id": "84d33b94-6a65-4677-9e06-de03bdc344d6",
+          "position": 7,
+          "quantity": 4,
+          "unit": null,
+          "item": "garlic cloves",
+          "note": "crushed"
+        },
+        {
+          "id": "268765be-8568-4121-a2f0-f67208b4c85a",
+          "position": 8,
+          "quantity": 2,
+          "unit": "tsp",
+          "item": "dried oregano",
+          "note": null
+        },
+        {
+          "id": "a28ea1cf-8df0-4986-ae76-6f5322f5aeea",
+          "position": 9,
+          "quantity": 1,
+          "unit": "tsp",
+          "item": "smoked paprika",
+          "note": null
+        },
+        {
+          "id": "58a65cdd-6823-4856-b49b-9fd82efc8b91",
+          "position": 10,
+          "quantity": 1.5,
+          "unit": "tsp",
+          "item": "salt",
+          "note": null
+        },
+        {
+          "id": "ca7002c4-8954-4cea-930a-8254b6f9685e",
+          "position": 11,
+          "quantity": 0.5,
+          "unit": "tsp",
+          "item": "black pepper",
+          "note": null
+        },
+        {
+          "id": "059ea77f-5e47-4d2a-85bc-30e2801e1b3b",
+          "position": 12,
+          "quantity": 15,
+          "unit": "g",
+          "item": "fresh parsley",
+          "note": "chopped, to serve"
+        }
+      ],
+      "steps": [
+        {
+          "id": "d2b7e963-9427-4cb9-8100-7bf467bcc974",
+          "position": 1,
+          "text": "Preheat the oven to 200 °C.",
+          "timerSeconds": null
+        },
+        {
+          "id": "d96ea875-d6e7-44cb-a98a-fa9f222cb7d9",
+          "position": 2,
+          "text": "Mix the olive oil, lemon zest and juice, garlic, oregano, paprika, salt and pepper in a large bowl.",
+          "timerSeconds": null
+        },
+        {
+          "id": "0acc78ba-9d48-4997-9f68-181613b0d98f",
+          "position": 3,
+          "text": "Toss the potatoes, onions and peppers in half the marinade and spread over a large roasting tray.",
+          "timerSeconds": null
+        },
+        {
+          "id": "9b4cd3dc-1dc9-481c-97f6-440c5176609f",
+          "position": 4,
+          "text": "Coat the chicken in the remaining marinade and nestle it skin-side up between the vegetables.",
+          "timerSeconds": null
+        },
+        {
+          "id": "319e7bc4-5295-4894-b299-da108f15ce3a",
+          "position": 5,
+          "text": "Roast until the skin is crisp and the potatoes are tender.",
+          "timerSeconds": 2700
+        },
+        {
+          "id": "5ed9d296-90bd-4472-ba94-73f8155c652e",
+          "position": 6,
+          "text": "Rest for 5 minutes, then scatter with parsley and serve.",
+          "timerSeconds": 300
+        }
+      ]
+    },
+    {
+      "id": "055f2024-3ae1-4a18-85a3-b57309a3cd4b",
+      "title": "Creamy Tomato & Spinach Pasta",
+      "description": "A fast weeknight pasta in a garlicky tomato cream sauce.",
+      "servings": 4,
+      "prepMin": 5,
+      "cookMin": 20,
+      "tags": [
+        "dinner",
+        "vegetarian",
+        "pasta",
+        "quick"
+      ],
+      "photoUrl": null,
+      "notes": "Add cooked chicken or bacon if you want it heartier.",
+      "isFavourite": false,
+      "ingredients": [
+        {
+          "id": "6648a6f5-66db-4acb-9137-6e1e14967568",
+          "position": 1,
+          "quantity": 400,
+          "unit": "g",
+          "item": "penne",
+          "note": null
+        },
+        {
+          "id": "e88bd69c-6fc1-444d-b981-6f69aef1d7ec",
+          "position": 2,
+          "quantity": 2,
+          "unit": "tbsp",
+          "item": "olive oil",
+          "note": null
+        },
+        {
+          "id": "689d127e-9d0f-4183-9b27-b556f44ab074",
+          "position": 3,
+          "quantity": 1,
+          "unit": null,
+          "item": "onion",
+          "note": "finely chopped"
+        },
+        {
+          "id": "51c77fb3-88cb-4f16-8134-cfbdcd8bb8ed",
+          "position": 4,
+          "quantity": 3,
+          "unit": null,
+          "item": "garlic cloves",
+          "note": "crushed"
+        },
+        {
+          "id": "88223098-437a-4069-be1d-978b2ca375de",
+          "position": 5,
+          "quantity": 400,
+          "unit": "g",
+          "item": "tinned chopped tomatoes",
+          "note": "1 tin"
+        },
+        {
+          "id": "3726184d-dae6-4ff9-9c0a-2c27edf9071e",
+          "position": 6,
+          "quantity": 1,
+          "unit": "tbsp",
+          "item": "tomato paste",
+          "note": null
+        },
+        {
+          "id": "93106a34-0f32-4cca-b84d-4abb1143be22",
+          "position": 7,
+          "quantity": 250,
+          "unit": "ml",
+          "item": "fresh cream",
+          "note": null
+        },
+        {
+          "id": "5cbced88-7d1a-4637-a53f-2d78bf70c18f",
+          "position": 8,
+          "quantity": 100,
+          "unit": "g",
+          "item": "baby spinach",
+          "note": null
+        },
+        {
+          "id": "db0ba4af-13d9-4191-be32-5494d6ed0e08",
+          "position": 9,
+          "quantity": 50,
+          "unit": "g",
+          "item": "parmesan",
+          "note": "finely grated"
+        },
+        {
+          "id": "00ae320b-327c-44cd-9c9e-c5b0a2e1f440",
+          "position": 10,
+          "quantity": 1,
+          "unit": "tsp",
+          "item": "salt",
+          "note": null
+        },
+        {
+          "id": "4a570b89-f958-4bef-8a57-50a4428e8e5e",
+          "position": 11,
+          "quantity": 0.5,
+          "unit": "tsp",
+          "item": "chilli flakes",
+          "note": "optional"
+        },
+        {
+          "id": "19ca4b43-d25a-44a4-9a88-c1d42b8cbc3d",
+          "position": 12,
+          "quantity": 4,
+          "unit": "l",
+          "item": "water",
+          "note": "for the pasta"
+        }
+      ],
+      "steps": [
+        {
+          "id": "dd86955c-5af2-4ff6-a216-f5c49f06440a",
+          "position": 1,
+          "text": "Bring the water to the boil with a good pinch of salt and cook the pasta until al dente.",
+          "timerSeconds": 660
+        },
+        {
+          "id": "0560703d-43ab-43bd-983d-6da482262747",
+          "position": 2,
+          "text": "Meanwhile, heat the oil in a large pan and fry the onion until soft.",
+          "timerSeconds": 300
+        },
+        {
+          "id": "e9e9aa73-d8b2-4a73-8d51-c13f8de56e22",
+          "position": 3,
+          "text": "Add the garlic, tomato paste and chilli flakes and fry for 1 minute.",
+          "timerSeconds": 60
+        },
+        {
+          "id": "1b270008-ef3a-40fc-b7f9-40c19e8212f6",
+          "position": 4,
+          "text": "Add the tinned tomatoes and simmer until slightly thickened.",
+          "timerSeconds": 480
+        },
+        {
+          "id": "bf0cb404-c0d4-4eac-a7b1-924bd5a9b8b0",
+          "position": 5,
+          "text": "Stir in the cream and salt, then add the spinach and stir until wilted.",
+          "timerSeconds": null
+        },
+        {
+          "id": "e756e71d-7400-4834-a3f6-99c510e90ed0",
+          "position": 6,
+          "text": "Drain the pasta, keeping 125 ml of the cooking water. Toss the pasta through the sauce, loosening with the water if needed.",
+          "timerSeconds": null
+        },
+        {
+          "id": "f54b762b-d4bf-4735-8b49-3525a56c6c41",
+          "position": 7,
+          "text": "Serve topped with parmesan.",
+          "timerSeconds": null
+        }
+      ]
+    },
+    {
+      "id": "5917087c-09f9-4713-a69e-226e5934958d",
+      "title": "Banana Bread",
+      "description": "Moist, easy loaf for using up very ripe bananas.",
+      "servings": 10,
+      "prepMin": 15,
+      "cookMin": 60,
+      "tags": [
+        "baking",
+        "breakfast",
+        "snack"
+      ],
+      "photoUrl": null,
+      "notes": "The blacker the bananas, the better. Keeps 4 days wrapped, or slice and freeze.",
+      "isFavourite": true,
+      "ingredients": [
+        {
+          "id": "11f3a99f-f860-4908-a3e8-6434f862a5e7",
+          "position": 1,
+          "quantity": 3,
+          "unit": null,
+          "item": "very ripe bananas",
+          "note": "about 350 g peeled"
+        },
+        {
+          "id": "185a43bc-d4f0-4700-ad88-d14be07b12a4",
+          "position": 2,
+          "quantity": 115,
+          "unit": "g",
+          "item": "butter",
+          "note": "melted"
+        },
+        {
+          "id": "d6a3b5d2-e015-4d50-a462-27990c50ee95",
+          "position": 3,
+          "quantity": 150,
+          "unit": "g",
+          "item": "brown sugar",
+          "note": null
+        },
+        {
+          "id": "10f6643a-466c-4162-b962-3a656c4e21fa",
+          "position": 4,
+          "quantity": 2,
+          "unit": null,
+          "item": "eggs",
+          "note": null
+        },
+        {
+          "id": "415d034f-a41d-4e5e-be20-f5d989130ec6",
+          "position": 5,
+          "quantity": 1,
+          "unit": "tsp",
+          "item": "vanilla essence",
+          "note": null
+        },
+        {
+          "id": "c1a6f7b8-a777-4842-bc90-f09ef8fc634f",
+          "position": 6,
+          "quantity": 240,
+          "unit": "g",
+          "item": "cake flour",
+          "note": null
+        },
+        {
+          "id": "72ff93bb-ddb1-406a-bc25-551adbbf0258",
+          "position": 7,
+          "quantity": 1,
+          "unit": "tsp",
+          "item": "bicarbonate of soda",
+          "note": null
+        },
+        {
+          "id": "8bb73d1e-63b1-4f8d-8dfc-88026561e93c",
+          "position": 8,
+          "quantity": 0.5,
+          "unit": "tsp",
+          "item": "salt",
+          "note": null
+        },
+        {
+          "id": "5d2d9036-0df3-40f2-b866-b9164d775e1a",
+          "position": 9,
+          "quantity": 1,
+          "unit": "tsp",
+          "item": "ground cinnamon",
+          "note": null
+        },
+        {
+          "id": "24fd8ecf-d6c8-452f-ad9e-9970c577e445",
+          "position": 10,
+          "quantity": 60,
+          "unit": "g",
+          "item": "pecan nuts",
+          "note": "chopped, optional"
+        }
+      ],
+      "steps": [
+        {
+          "id": "e5419321-1ae2-49b4-b816-d57da9fb8117",
+          "position": 1,
+          "text": "Preheat the oven to 170 °C and line a 23 × 13 cm loaf tin with baking paper.",
+          "timerSeconds": null
+        },
+        {
+          "id": "b4bd73e4-0b43-46f5-8e96-5d5e4d29b0a1",
+          "position": 2,
+          "text": "Mash the bananas in a large bowl until mostly smooth.",
+          "timerSeconds": null
+        },
+        {
+          "id": "5a99eac4-d2aa-450a-9d17-a852a0c1bb9c",
+          "position": 3,
+          "text": "Stir in the melted butter, sugar, eggs and vanilla.",
+          "timerSeconds": null
+        },
+        {
+          "id": "025ab61b-a0f1-474f-adb6-ec6ec6603d33",
+          "position": 4,
+          "text": "Add the flour, bicarbonate of soda, salt and cinnamon and fold until just combined. Fold in the nuts.",
+          "timerSeconds": null
+        },
+        {
+          "id": "938935ec-c5d6-42c1-9f52-3f01b8853085",
+          "position": 5,
+          "text": "Pour into the tin and bake until a skewer comes out clean. Cover with foil after 40 minutes if it browns too fast.",
+          "timerSeconds": 3600
+        },
+        {
+          "id": "e435c1ec-5571-4fd7-9494-ad625add5477",
+          "position": 6,
+          "text": "Cool in the tin, then turn out onto a rack.",
+          "timerSeconds": 900
+        }
+      ]
+    }
+  ]
+}

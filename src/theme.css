@@ -1,0 +1,77 @@
+/*
+ * Keira's Kitchen theme: the single source of all colours, fonts, spacing
+ * and radii. Components must use these variables, never raw values.
+ * Placeholder neutral grey palette; real palette to come.
+ */
+:root {
+  /* Colours */
+  --color-bg: #f2f2f2;            /* also in index.html theme-color + manifest */
+  --color-surface: #ffffff;
+  --color-surface-pressed: #e4e4e4;
+  --color-border: #d0d0d0;
+  --color-text: #1f1f1f;
+  --color-text-muted: #6b6b6b;
+  --color-primary: #4a4a4a;
+  --color-primary-pressed: #333333;
+  --color-on-primary: #ffffff;
+  --color-destructive: #c62828;   /* only for actions that lose data */
+  --color-destructive-pressed: #a11f1f;
+  --color-on-destructive: #ffffff;
+  --color-scrim: rgba(0, 0, 0, 0.45);
+
+  /* Fonts */
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-heading: var(--font-body);
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+  --font-weight-normal: 400;
+  --font-weight-bold: 600;
+  --line-height: 1.5;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  /* Radii */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  /* Tap targets */
+  --tap-min: 44px;
+  --tap-min-cook: 56px;
+
+  /* Press feedback */
+  --press-scale: 0.97;
+  --press-duration: 80ms;
+}
+
+html,
+body {
+  margin: 0;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100dvh;
+  -webkit-tap-highlight-color: transparent;
+  /* Keep content clear of the iPhone notch / home indicator */
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
+}

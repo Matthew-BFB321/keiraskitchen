@@ -18,6 +18,13 @@
   --color-destructive-pressed: #a11f1f;
   --color-on-destructive: #ffffff;
   --color-scrim: rgba(0, 0, 0, 0.45);
+  --color-photo-placeholder: #d6d6d6;
+  --color-chip: #e2e2e2;
+  --color-chip-selected: #4a4a4a;
+  --color-on-chip-selected: #ffffff;
+
+  /* Shadows */
+  --shadow-sheet: 0 -4px 24px rgba(0, 0, 0, 0.15);
 
   /* Fonts */
   --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;

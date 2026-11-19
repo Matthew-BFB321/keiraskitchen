@@ -1,0 +1,42 @@
+import { describe, it, expect, vi } from 'vitest'
+import { getAllRecipes, getRecipe, toggleFavourite, subscribe } from './recipeStore.js'
+
+describe('recipeStore', () => {
+  it('loads the 5 sample recipes', () => {
+    expect(getAllRecipes()).toHaveLength(5)
+  })
+
+  it('finds a recipe by id, and returns null for an unknown id', () => {
+    const first = getAllRecipes()[0]
+    expect(getRecipe(first.id)).toBe(first)
+    expect(getRecipe('not-a-real-id')).toBeNull()
+  })
+
+  it('toggles a favourite immutably and notifies subscribers', () => {
+    const before = getAllRecipes()
+    const target = before[0]
+    const listener = vi.fn()
+    const unsubscribe = subscribe(listener)
+
+    toggleFavourite(target.id)
+    const after = getAllRecipes()
+    expect(after).not.toBe(before)
+    expect(getRecipe(target.id).isFavourite).toBe(!target.isFavourite)
+    expect(target.isFavourite).toBe(before[0].isFavourite) // original object untouched
+    expect(listener).toHaveBeenCalledTimes(1)
+
+    toggleFavourite(target.id)
+    expect(getRecipe(target.id).isFavourite).toBe(target.isFavourite)
+    unsubscribe()
+    toggleFavourite(target.id)
+    expect(listener).toHaveBeenCalledTimes(2)
+    toggleFavourite(target.id) // restore
+  })
+
+  it('sample data matches the internal schema, including group and source', () => {
+    for (const r of getAllRecipes()) {
+      expect(r).toHaveProperty('source')
+      for (const i of r.ingredients) expect(i).toHaveProperty('group')
+    }
+  })
+})

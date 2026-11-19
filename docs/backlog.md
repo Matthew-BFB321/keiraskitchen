@@ -10,3 +10,4 @@ Ideas, not commitments. Statuses: Later, Next, In progress, Done, Dropped.
 | 2026-11-19 | Wall mount              | Layout for a tablet mounted in the kitchen.                           | Later  |
 | 2026-11-19 | Voice control           | Hands-free "next step" / "start timer" in cook mode.                  | Later  |
 | 2026-11-19 | Let Keira add/edit tags in the app | Add, rename or remove tags from the fixed list without a code change. | Later  |
+| 2026-11-19 | Smart servings | Suggest serving counts that keep eggs/cans whole and flag awkward amounts like ¾ egg. | Later  |

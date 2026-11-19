@@ -71,29 +71,39 @@ function RecipeView({ id }) {
         )}
       </header>
 
-      <section className="recipe__servings">
-        <h2 className="recipe__servings-label">Servings</h2>
-        <div className="recipe__stepper">
-          <button
-            type="button"
-            className="recipe__icon-button recipe__icon-button--outlined"
-            aria-label="Fewer servings"
-            disabled={servings <= 1}
-            onClick={() => setServings((s) => Math.max(1, s - 1))}
-          >
-            −
-          </button>
-          <output className="recipe__servings-count" aria-live="polite">{servings}</output>
-          <button
-            type="button"
-            className="recipe__icon-button recipe__icon-button--outlined"
-            aria-label="More servings"
-            onClick={() => setServings((s) => s + 1)}
-          >
-            +
-          </button>
-        </div>
-      </section>
+      <div className="recipe__servings-block">
+        <section className="recipe__servings">
+          <h2 className="recipe__servings-label">Servings</h2>
+          <div className="recipe__stepper">
+            <button
+              type="button"
+              className="recipe__icon-button recipe__icon-button--outlined"
+              aria-label="Fewer servings"
+              disabled={servings <= 1}
+              onClick={() => setServings((s) => Math.max(1, s - 1))}
+            >
+              −
+            </button>
+            <output className="recipe__servings-count" aria-live="polite">{servings}</output>
+            <button
+              type="button"
+              className="recipe__icon-button recipe__icon-button--outlined"
+              aria-label="More servings"
+              onClick={() => setServings((s) => s + 1)}
+            >
+              +
+            </button>
+          </div>
+        </section>
+        {servings !== recipe.servings && (
+          <p className="recipe__original">
+            Original recipe: {recipe.servings} ·{' '}
+            <button type="button" className="recipe__reset" onClick={() => setServings(recipe.servings)}>
+              Reset
+            </button>
+          </p>
+        )}
+      </div>
 
       <section className="recipe__section">
         <h2 className="recipe__heading">Ingredients</h2>

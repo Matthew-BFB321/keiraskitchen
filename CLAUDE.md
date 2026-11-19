@@ -9,6 +9,7 @@ Personal recipe web app (installable PWA) for Keira. Purpose: get her from
 - Sample data: `src/data/recipes.json` (`schemaVersion: 1`). Units are metric
   as used in South Africa: g, kg, ml, l, tsp, tbsp; oven temperatures in °C.
 - Decisions log: `docs/decisions.md`. Ideas: `docs/backlog.md`.
+  Recipe import/export format: `docs/recipe-format.md`.
 
 ## Commands
 
@@ -38,3 +39,6 @@ Personal recipe web app (installable PWA) for Keira. Purpose: get her from
 5. **All records use UUIDs** (`crypto.randomUUID()`) for recipes, ingredients
    and steps. Nothing is keyed or looked up by title. Order uses `position`,
    not array index or title.
+6. All recipe import, export and backup must follow docs/recipe-format.md.
+   Internal storage keeps its own schema (UUIDs, positions, timerSeconds);
+   the import format is converted on save.

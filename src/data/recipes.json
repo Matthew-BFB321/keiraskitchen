@@ -9,10 +9,7 @@
       "prepMin": 20,
       "cookMin": 50,
       "tags": [
-        "dinner",
-        "south african",
-        "beef",
-        "oven bake"
+        "protein"
       ],
       "photoUrl": null,
       "notes": "Serve with yellow rice and chutney. Freezes well before the topping goes on.",
@@ -220,8 +217,6 @@
       "prepMin": 15,
       "cookMin": 40,
       "tags": [
-        "dessert",
-        "south african",
         "baking"
       ],
       "photoUrl": null,
@@ -412,10 +407,7 @@
       "prepMin": 15,
       "cookMin": 45,
       "tags": [
-        "dinner",
-        "chicken",
-        "weeknight",
-        "one tray"
+        "protein"
       ],
       "photoUrl": null,
       "notes": "Bone-in thighs stay juiciest. Check they read 75 °C at the thickest part.",
@@ -578,10 +570,9 @@
       "prepMin": 5,
       "cookMin": 20,
       "tags": [
-        "dinner",
-        "vegetarian",
         "pasta",
-        "quick"
+        "quick",
+        "creamy"
       ],
       "photoUrl": null,
       "notes": "Add cooked chicken or bacon if you want it heartier.",
@@ -750,9 +741,7 @@
       "prepMin": 15,
       "cookMin": 60,
       "tags": [
-        "baking",
-        "breakfast",
-        "snack"
+        "baking"
       ],
       "photoUrl": null,
       "notes": "The blacker the bananas, the better. Keeps 4 days wrapped, or slice and freeze.",

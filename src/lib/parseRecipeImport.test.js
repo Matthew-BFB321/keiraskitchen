@@ -12,7 +12,7 @@ const shakshuka = () => ({
   servings: 2,
   prepMin: 10,
   cookMin: 20,
-  tags: ['quick', 'vegetarian', 'breakfast'],
+  tags: ['quick'],
   ingredients: [
     { group: null, quantity: 1, unit: 'tbsp', item: 'olive oil', note: null },
     { group: null, quantity: 1, unit: null, item: 'onion', note: 'finely chopped' },
@@ -44,7 +44,7 @@ describe('parseRecipeImport', () => {
       servings: 2,
       prepMin: 10,
       cookMin: 20,
-      tags: ['quick', 'vegetarian', 'breakfast'],
+      tags: ['quick'],
       photoUrl: null,
       isFavourite: false,
       source: 'ChatGPT',
@@ -138,12 +138,35 @@ describe('parseRecipeImport', () => {
     expect(result.fixes).toContain('Ingredient 6 (thyme): the app doesn\'t know the unit "sprig", so it was moved into the note.')
   })
 
-  it('keeps only the first 4 tags and never errors on tags', () => {
-    const tooMany = parse({ ...shakshuka(), tags: ['quick', 'Vegetarian', 'breakfast', 'eggs', 'one pan'] })
-    expect(tooMany.ok).toBe(true)
-    expect(tooMany.recipe.tags).toEqual(['quick', 'vegetarian', 'breakfast', 'eggs'])
-    expect(tooMany.fixes).toContain('Tag "Vegetarian" changed to lowercase "vegetarian".')
-    expect(tooMany.fixes).toContain('Only 4 tags are allowed; kept the first 4 and dropped "one pan".')
+  it('matches tags to the tag list ignoring case, without listing a fix', () => {
+    const result = parse({ ...shakshuka(), tags: ['Pasta', ' CREAMY '] })
+    expect(result.ok).toBe(true)
+    expect(result.recipe.tags).toEqual(['pasta', 'creamy'])
+    expect(result.fixes).toEqual([])
+  })
+
+  it('removes tags that are not on the tag list and lists each one', () => {
+    const result = parse({ ...shakshuka(), tags: ['dinner', 'quick', 'vegetarian'] })
+    expect(result.ok).toBe(true)
+    expect(result.recipe.tags).toEqual(['quick'])
+    expect(result.fixes).toEqual([
+      'Removed tag "dinner" (not in the tag list).',
+      'Removed tag "vegetarian" (not in the tag list).',
+    ])
+  })
+
+  it('keeps at most 3 tags', () => {
+    const result = parse({ ...shakshuka(), tags: ['pasta', 'quick', 'creamy', 'protein'] })
+    expect(result.ok).toBe(true)
+    expect(result.recipe.tags).toEqual(['pasta', 'quick', 'creamy'])
+    expect(result.fixes).toEqual(['Only 3 tags are allowed; kept the first 3 and dropped "protein".'])
+  })
+
+  it('accepts an empty or missing tag list', () => {
+    const empty = parse({ ...shakshuka(), tags: [] })
+    expect(empty.ok).toBe(true)
+    expect(empty.recipe.tags).toEqual([])
+    expect(empty.fixes).toEqual([])
 
     const { tags, ...noTags } = shakshuka()
     const missing = parse(noTags)

@@ -1,12 +1,14 @@
 import { Link } from 'react-router-dom'
 import { toggleFavourite } from '../lib/recipeStore.js'
 import { formatTotalTime } from '../lib/libraryFilters.js'
+import { findTag } from '../config/tags.js'
 import './RecipeCard.css'
 
 // Full-width row: thumbnail, title + meta (all one link), heart button outside the link.
 export default function RecipeCard({ recipe }) {
   const time = formatTotalTime(recipe.prepMin, recipe.cookMin)
-  const meta = [time, recipe.tags[0]].filter(Boolean).join(' · ')
+  const firstTag = recipe.tags.map(findTag).find(Boolean)
+  const meta = [time, firstTag?.label].filter(Boolean).join(' · ')
 
   return (
     <article className="recipe-card">

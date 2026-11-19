@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { filterRecipes, allTags, sortByTitle, formatTotalTime } from './libraryFilters.js'
+import { filterRecipes, usedTags, sortByTitle, formatTotalTime } from './libraryFilters.js'
 
 const recipe = (title, tags, items) => ({
   id: title,
@@ -9,9 +9,9 @@ const recipe = (title, tags, items) => ({
 })
 
 const recipes = [
-  recipe('Bobotie', ['dinner', 'beef'], ['beef mince', 'onions']),
-  recipe('Banana Bread', ['baking', 'snack'], ['bananas', 'cake flour']),
-  recipe('Malva Pudding', ['dessert', 'baking'], ['apricot jam', 'cake flour']),
+  recipe('Bobotie', ['protein'], ['beef mince', 'onions']),
+  recipe('Banana Bread', ['baking', 'quick'], ['bananas', 'cake flour']),
+  recipe('Malva Pudding', ['baking'], ['apricot jam', 'cake flour']),
 ]
 const titles = (list) => list.map((r) => r.title)
 
@@ -34,13 +34,17 @@ describe('filterRecipes', () => {
 
   it('combines tag and search', () => {
     expect(titles(filterRecipes(recipes, { tag: 'baking', query: 'jam' }))).toEqual(['Malva Pudding'])
-    expect(filterRecipes(recipes, { tag: 'beef', query: 'jam' })).toEqual([])
+    expect(filterRecipes(recipes, { tag: 'protein', query: 'jam' })).toEqual([])
   })
 })
 
-describe('allTags and sortByTitle', () => {
-  it('lists each tag once, alphabetically', () => {
-    expect(allTags(recipes)).toEqual(['baking', 'beef', 'dessert', 'dinner', 'snack'])
+describe('usedTags and sortByTitle', () => {
+  it('lists only tags in use, once each, in tag-list order with labels', () => {
+    expect(usedTags(recipes)).toEqual([
+      { id: 'protein', label: 'Protein' },
+      { id: 'baking', label: 'Baking' },
+      { id: 'quick', label: 'Quick' },
+    ])
   })
 
   it('sorts by title without changing the original', () => {

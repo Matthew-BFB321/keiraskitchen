@@ -1,4 +1,4 @@
-# Keira's Kitchen recipe format (v1.1 rules, format version 1)
+# Keira's Kitchen recipe format (v1.2 rules, format version 1)
 
 Every recipe entering the app (ChatGPT import, bulk import, backup
 restore) uses this JSON. The app validates it, shows a preview, then
@@ -13,7 +13,9 @@ Fields:
 - servings: whole number, required (base for the servings scaler)
 - prepMin, cookMin: whole minutes, or null. prepMin includes rising,
   marinating and resting time
-- tags: list of 1-4 lowercase words
+- tags: 0-3 tags, only from this list: pasta, asian, protein, baking,
+  quick, burgers, creamy (use [] if none fit). These are the tag ids in
+  src/config/tags.js; unknown tags are dropped on import
 - ingredients: list, each with:
   - group: section name like "Sauce", or null
   - quantity: number (decimals, never fractions or ranges), or null
@@ -37,7 +39,7 @@ Example:
 {"format":"keiras-kitchen-recipe","version":1,"title":"Shakshuka",
 "description":"Eggs poached in a spiced tomato and pepper sauce.",
 "servings":2,"prepMin":10,"cookMin":20,
-"tags":["quick","vegetarian","breakfast"],
+"tags":["quick"],
 "ingredients":[
 {"group":null,"quantity":1,"unit":"tbsp","item":"olive oil","note":null},
 {"group":null,"quantity":1,"unit":null,"item":"onion","note":"finely chopped"},

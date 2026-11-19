@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
 import { getAllRecipes, getRecipe, toggleFavourite, subscribe } from './recipeStore.js'
+import { findTag, MAX_TAGS } from '../config/tags.js'
 
 describe('recipeStore', () => {
   it('loads the 5 sample recipes', () => {
@@ -31,6 +32,13 @@ describe('recipeStore', () => {
     toggleFavourite(target.id)
     expect(listener).toHaveBeenCalledTimes(2)
     toggleFavourite(target.id) // restore
+  })
+
+  it('sample recipes only use tags from the tag list, at most 3 each', () => {
+    for (const r of getAllRecipes()) {
+      expect(r.tags.length).toBeLessThanOrEqual(MAX_TAGS)
+      for (const tag of r.tags) expect(findTag(tag), `${r.title}: ${tag}`).not.toBeNull()
+    }
   })
 
   it('sample data matches the internal schema, including group and source', () => {

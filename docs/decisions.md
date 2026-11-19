@@ -48,3 +48,17 @@ Home Screen", runs full-screen, works offline, and updates by simply deploying.
   lost on save.
 - The sample data in `src/data/recipes.json` doesn't have these fields yet;
   treat a missing value as null.
+
+## 2026-11-19: Fixed tag list
+
+- Tags come from a fixed list in `src/config/tags.js`, shown in this order:
+  Pasta, Asian, Protein, Baking, Quick, Burgers, Creamy. Recipes store the
+  lowercase id; screens show the label.
+- **Why:** the list is chosen from how Keira actually looks for recipes.
+  Free-form tags from ChatGPT ("dinner", "south african", "one tray") would
+  fill the chip row with clutter. Ingredients like garlic are found with the
+  search box, not tags.
+- At most 3 tags per recipe; none is fine. On import, tags are matched to the
+  list ignoring case, and unknown tags are dropped and listed as fixes.
+- The Library only shows chips for tags that at least one recipe uses.
+- Recipe format rules bumped to v1.2 (format version stays 1).

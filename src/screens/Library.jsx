@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { useRecipes } from '../lib/recipeStore.js'
-import { allTags, filterRecipes, sortByTitle } from '../lib/libraryFilters.js'
+import { findTag } from '../config/tags.js'
+import { filterRecipes, sortByTitle, usedTags } from '../lib/libraryFilters.js'
 import RecipeCard from '../components/RecipeCard.jsx'
 import Sheet from '../components/Sheet.jsx'
 import AddRecipeOptions from '../components/AddRecipeOptions.jsx'
@@ -12,7 +13,7 @@ export default function Library() {
   const [tag, setTag] = useState(null)
   const [addOpen, setAddOpen] = useState(false)
 
-  const tags = useMemo(() => allTags(recipes), [recipes])
+  const tags = useMemo(() => usedTags(recipes), [recipes])
   const results = useMemo(() => sortByTitle(filterRecipes(recipes, { query, tag })), [recipes, query, tag])
   const favourites = results.filter((r) => r.isFavourite)
   const others = results.filter((r) => !r.isFavourite)
@@ -60,13 +61,13 @@ export default function Library() {
             </button>
             {tags.map((t) => (
               <button
-                key={t}
+                key={t.id}
                 type="button"
                 className="library__chip"
-                aria-pressed={tag === t}
-                onClick={() => setTag(tag === t ? null : t)}
+                aria-pressed={tag === t.id}
+                onClick={() => setTag(tag === t.id ? null : t.id)}
               >
-                {t}
+                {t.label}
               </button>
             ))}
           </div>
@@ -76,7 +77,7 @@ export default function Library() {
               <p className="library__empty-text">
                 No recipes match
                 {query.trim() && <> “{query.trim()}”</>}
-                {tag && <> in {tag}</>}.
+                {tag && <> in {findTag(tag)?.label}</>}.
               </p>
               <button type="button" className="library__clear" onClick={clearSearch}>
                 Clear search

@@ -1,3 +1,5 @@
+import { TAGS } from '../config/tags.js'
+
 // Pure helpers for the Library screen.
 
 // Search matches title OR any ingredient item, case-insensitive. tag null = All.
@@ -10,8 +12,10 @@ export function filterRecipes(recipes, { query = '', tag = null } = {}) {
   })
 }
 
-export function allTags(recipes) {
-  return [...new Set(recipes.flatMap((r) => r.tags))].sort((a, b) => a.localeCompare(b))
+// Tags from the fixed list that at least one recipe uses, in list order.
+export function usedTags(recipes) {
+  const used = new Set(recipes.flatMap((r) => r.tags))
+  return TAGS.filter((t) => used.has(t.id))
 }
 
 export function sortByTitle(recipes) {

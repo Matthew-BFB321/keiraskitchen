@@ -1,4 +1,5 @@
 import { newId } from './uuid.js'
+import { findTag, MAX_TAGS } from '../config/tags.js'
 
 /*
  * Parses pasted text in the recipe import format (docs/recipe-format.md)
@@ -205,7 +206,8 @@ function readMinutes(value, label, errors, fixes) {
   return n.value
 }
 
-// Tags are never an error: anything unusable is dropped and reported as a fix.
+// Tags are never an error. They're matched to the fixed list (src/config/tags.js)
+// ignoring case; anything not on the list is dropped and reported as a fix.
 function readTags(value, fixes) {
   if (value === undefined || value === null) return []
   let list = value
@@ -225,15 +227,20 @@ function readTags(value, fixes) {
       continue
     }
     const clean = tag.trim()
-    const lower = clean.toLowerCase()
-    if (lower !== clean) fixes.push(`Tag "${clean}" changed to lowercase "${lower}".`)
-    tags.push(lower)
+    const known = findTag(clean.toLowerCase())
+    if (!known) {
+      fixes.push(`Removed tag "${clean}" (not in the tag list).`)
+      continue
+    }
+    if (!tags.includes(known.id)) tags.push(known.id)
   }
   if (dropped > 0) fixes.push(`Removed ${dropped} empty tag${dropped === 1 ? '' : 's'}.`)
 
-  if (tags.length > 4) {
-    const extra = tags.splice(4)
-    fixes.push(`Only 4 tags are allowed; kept the first 4 and dropped ${extra.map((t) => `"${t}"`).join(', ')}.`)
+  if (tags.length > MAX_TAGS) {
+    const extra = tags.splice(MAX_TAGS)
+    fixes.push(
+      `Only ${MAX_TAGS} tags are allowed; kept the first ${MAX_TAGS} and dropped ${extra.map((t) => `"${t}"`).join(', ')}.`,
+    )
   }
   return tags
 }

@@ -39,3 +39,12 @@ Home Screen", runs full-screen, works offline, and updates by simply deploying.
 - **Import format ≠ internal storage.** On save, the app assigns its own UUIDs
   and positions and converts `timerMin` to `timerSeconds` (× 60). Internal
   storage keeps its own schema.
+
+## 2026-11-19: Internal schema gains `group` and `source`
+
+- Ingredients now have an optional `group` (section name like "Sauce", or
+  null), and recipes have an optional `source` (where the recipe came from, or
+  null). Both are kept from the import format so nothing ChatGPT provides is
+  lost on save.
+- The sample data in `src/data/recipes.json` doesn't have these fields yet;
+  treat a missing value as null.

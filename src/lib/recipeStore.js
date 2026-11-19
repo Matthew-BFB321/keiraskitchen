@@ -38,3 +38,8 @@ export function toggleFavourite(id) {
 export function useRecipes() {
   return useSyncExternalStore(subscribe, getAllRecipes)
 }
+
+// React hook for one recipe (null if not found); re-renders when it changes.
+export function useRecipe(id) {
+  return useSyncExternalStore(subscribe, () => getRecipe(id))
+}

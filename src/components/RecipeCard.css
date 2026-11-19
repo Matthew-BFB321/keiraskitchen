@@ -61,25 +61,3 @@
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
 }
-
-.recipe-card__heart {
-  flex: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: var(--tap-min);
-  height: var(--tap-min);
-  padding: 0;
-  border: none;
-  border-radius: 50%;
-  background: transparent;
-  color: var(--color-primary);
-  cursor: pointer;
-  transition: transform var(--press-duration) ease-out,
-    background-color var(--press-duration) ease-out;
-}
-
-.recipe-card__heart:active {
-  transform: scale(var(--press-scale));
-  background: var(--color-surface-pressed);
-}

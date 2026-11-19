@@ -11,6 +11,9 @@ import './Dialog.css'
  *   confirmLabel="Delete recipe"
  *
  * Omit cancelLabel for a single-button (alert-style) dialog.
+ *
+ * onDismiss (optional) handles Escape / back gesture / tapping outside.
+ * Defaults to onCancel; set it when cancel isn't the safe choice.
  */
 export default function Dialog({
   open,
@@ -21,6 +24,7 @@ export default function Dialog({
   destructive = false,
   onConfirm,
   onCancel,
+  onDismiss,
 }) {
   const ref = useRef(null)
   const titleId = useId()
@@ -36,12 +40,12 @@ export default function Dialog({
   // Escape key / back gesture fires 'cancel'; treat it like the cancel button.
   function handleCancel(event) {
     event.preventDefault()
-    ;(onCancel ?? onConfirm)?.()
+    ;(onDismiss ?? onCancel ?? onConfirm)?.()
   }
 
-  // Tapping the scrim (outside the panel) cancels, but only when there is a cancel option.
+  // Tapping the scrim (outside the panel) dismisses, but only when there is a cancel option.
   function handleClick(event) {
-    if (event.target === ref.current && cancelLabel) onCancel?.()
+    if (event.target === ref.current && cancelLabel) (onDismiss ?? onCancel)?.()
   }
 
   return (

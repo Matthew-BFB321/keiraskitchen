@@ -5,9 +5,13 @@ import { createTimer, pauseTimer as pause, resumeTimer as resume } from './cookT
  * Cooking progress per recipe: ticks, current step, "got it" ingredients,
  * chosen servings and timers. Held in memory for the session, so it survives
  * leaving cook mode (Exit, back gesture, Library) but not a page reload.
+ * Clearing progress never touches timers.
  *
  * Updates are immutable so React re-renders, like recipeStore.
  */
+
+export const STALE_AFTER_MS = 12 * 60 * 60 * 1000
+export const MID_COOK_MS = 30 * 60 * 1000
 
 const EMPTY = Object.freeze({
   servings: null,
@@ -15,6 +19,7 @@ const EMPTY = Object.freeze({
   currentStepId: null,
   gotIngredientIds: [],
   timers: [],
+  lastActivity: null,
 })
 
 let progress = {}
@@ -31,7 +36,7 @@ export function subscribe(listener) {
 }
 
 function update(recipeId, change) {
-  progress = { ...progress, [recipeId]: change(getProgress(recipeId)) }
+  progress = { ...progress, [recipeId]: { ...change(getProgress(recipeId)), lastActivity: Date.now() } }
   allTimers = Object.values(progress).flatMap((p) => p.timers)
   notify()
 }
@@ -71,6 +76,41 @@ export function setCurrent(recipeId, stepId) {
 
 export function toggleGot(recipeId, ingredientId) {
   update(recipeId, (p) => ({ ...p, gotIngredientIds: toggleIn(p.gotIngredientIds, ingredientId) }))
+}
+
+// Opening cook mode counts as activity, so popping straight back doesn't ask again.
+export function markActive(recipeId) {
+  update(recipeId, (p) => p)
+}
+
+// Fresh start: clears ticks, current step and ingredient ticks. Keeps timers and servings.
+export function clearProgress(recipeId) {
+  update(recipeId, (p) => ({ ...p, doneStepIds: [], currentStepId: null, gotIngredientIds: [] }))
+}
+
+function allStepsDone(p, steps) {
+  return steps.length > 0 && steps.every((s) => p.doneStepIds.includes(s.id))
+}
+
+// Called when she leaves cook mode: a finished cook shouldn't carry over to the next one.
+export function clearIfFinished(recipeId, steps) {
+  if (allStepsDone(getProgress(recipeId), steps)) clearProgress(recipeId)
+}
+
+/*
+ * What to do when cook mode opens:
+ *   'fresh'    nothing to resume
+ *   'reset'    clear first: last activity over 12 hours ago, or every step already done
+ *   'continue' carry on silently: back mid-cook (a timer exists or active < 30 min ago)
+ *   'ask'      partial progress after a gap of 30 min to 12 hours: "Pick up where you left off?"
+ */
+export function sessionStart(p, steps, now) {
+  const hasProgress = p.doneStepIds.length > 0 || p.gotIngredientIds.length > 0 || p.currentStepId != null
+  if (!hasProgress) return 'fresh'
+  const gap = p.lastActivity == null ? Infinity : now - p.lastActivity
+  if (gap > STALE_AFTER_MS || allStepsDone(p, steps)) return 'reset'
+  if (p.timers.length > 0 || gap < MID_COOK_MS) return 'continue'
+  return 'ask'
 }
 
 // "Done, next": tick the current step and move to the next unticked one.

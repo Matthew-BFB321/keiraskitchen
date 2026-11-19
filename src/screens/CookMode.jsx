@@ -1,8 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
-import { useRecipe } from '../lib/recipeStore.js'
+import { useRecipe, getRecipe } from '../lib/recipeStore.js'
 import {
   useCookProgress,
+  getProgress,
+  sessionStart,
+  clearProgress,
+  clearIfFinished,
+  markActive,
   setServings,
   toggleDone,
   setCurrent,
@@ -20,6 +25,7 @@ import { unlockAudio } from '../lib/alarm.js'
 import { useNow } from '../lib/useNow.js'
 import { useWakeLock } from '../lib/useWakeLock.js'
 import Sheet from '../components/Sheet.jsx'
+import Dialog from '../components/Dialog.jsx'
 import './CookMode.css'
 
 function parseServings(value) {
@@ -36,6 +42,20 @@ export default function CookMode() {
   const [ingredientsOpen, setIngredientsOpen] = useState(false)
   const stepRefs = useRef(new Map())
   useWakeLock()
+
+  // Decided once, on opening, before anything below records new activity.
+  const [start] = useState(() => (recipe ? sessionStart(getProgress(id), recipe.steps, Date.now()) : 'fresh'))
+  const [askResume, setAskResume] = useState(start === 'ask')
+
+  useEffect(() => {
+    if (start === 'reset') clearProgress(id)
+    else markActive(id)
+    // Leaving after ticking every step: the next "Start cooking" starts fresh.
+    return () => {
+      const r = getRecipe(id)
+      if (r) clearIfFinished(id, r.steps)
+    }
+  }, [id, start])
 
   const servings = parseServings(searchParams.get('servings')) ?? progress.servings ?? recipe?.servings ?? 1
 
@@ -199,6 +219,20 @@ export default function CookMode() {
           </button>
         )}
       </div>
+
+      <Dialog
+        open={askResume}
+        title="Pick up where you left off?"
+        message={`${doneCount} of ${steps.length} steps done.`}
+        cancelLabel="Start over"
+        confirmLabel="Continue"
+        onCancel={() => {
+          clearProgress(id)
+          setAskResume(false)
+        }}
+        onConfirm={() => setAskResume(false)}
+        onDismiss={() => setAskResume(false)}
+      />
 
       <Sheet open={ingredientsOpen} title="Ingredients" closeLabel="Close" onClose={() => setIngredientsOpen(false)}>
         <p className="cook__muted">For {servings} {servings === 1 ? 'serving' : 'servings'}</p>

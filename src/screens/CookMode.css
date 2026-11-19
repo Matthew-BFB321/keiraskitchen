@@ -322,7 +322,12 @@
   background: var(--color-primary-pressed);
 }
 
-/* Ingredients sheet (rendered inside .cook, so these apply) */
+/* Sheet and Dialog are rendered inside .cook, so these apply */
+.cook .dialog__button {
+  min-height: var(--tap-min-cook);
+  font-size: var(--font-size-lg);
+}
+
 .cook .sheet__cancel {
   min-height: var(--tap-min-cook);
   font-size: var(--font-size-lg);

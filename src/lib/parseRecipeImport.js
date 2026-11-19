@@ -83,72 +83,93 @@ export function parseRecipeImport(text) {
     return fail(["The pasted data isn't a single recipe."])
   }
 
-  const errors = []
-  const fixes = []
-
-  if (data.format !== FORMAT) {
-    errors.push(`This isn't a Keira's Kitchen recipe (format should be "${FORMAT}").`)
-  }
-  if (data.version === undefined) {
-    errors.push(`The recipe doesn't say which format version it uses (it should be ${VERSION}).`)
-  } else if (data.version !== VERSION) {
-    errors.push(`This recipe uses format version ${JSON.stringify(data.version)}; only version ${VERSION} is supported.`)
-  }
-
-  const title = typeof data.title === 'string' ? data.title.trim() : ''
-  if (title === '') errors.push('The recipe has no title.')
-
-  const description = optionalText(data.description, errors, "The description isn't text.")
-  const notes = optionalText(data.notes, errors, "The recipe notes aren't text.")
-  const source = optionalText(data.source, errors, "The source isn't text.")
-
-  const servings = readServings(data.servings, errors, fixes)
-  const prepMin = readMinutes(data.prepMin, 'Prep time', errors, fixes)
-  const cookMin = readMinutes(data.cookMin, 'Cooking time', errors, fixes)
-  const tags = readTags(data.tags, fixes)
-
-  let ingredients = []
-  if (!Array.isArray(data.ingredients) || data.ingredients.length === 0) {
-    errors.push('The recipe has no ingredients.')
-  } else {
-    ingredients = data.ingredients.map((raw, i) => readIngredient(raw, i + 1, errors, fixes))
-  }
-
-  let steps = []
-  if (!Array.isArray(data.steps) || data.steps.length === 0) {
-    errors.push('The recipe has no steps.')
-  } else {
-    if (data.steps.some((raw) => typeof raw === 'string')) {
-      fixes.push('Some steps were plain text without timer details; they were read as steps with no timer.')
-    }
-    steps = data.steps.map((raw, i) => readStep(raw, i + 1, errors, fixes))
-  }
-
-  if (errors.length > 0) return fail(errors)
-
-  return {
-    ok: true,
-    fixes,
-    recipe: {
-      id: newId(),
-      title,
-      description,
-      servings,
-      prepMin,
-      cookMin,
-      tags,
-      photoUrl: null,
-      notes,
-      source,
-      isFavourite: false,
-      ingredients: ingredients.map((ing, i) => ({ id: newId(), position: i + 1, ...ing })),
-      steps: steps.map((step, i) => ({ id: newId(), position: i + 1, ...step })),
-    },
-  }
+  const { value, fixes, errors } = validateRecipeData(data)
+  if (errors.length > 0) return fail(errors.map((e) => e.message))
+  return { ok: true, fixes, recipe: buildRecipe(value) }
 }
 
 function fail(errors) {
   return { ok: false, errors }
+}
+
+/*
+ * The one set of recipe rules, shared by the importer and the recipe builder.
+ * Takes a recipe in the import format and returns:
+ *   value  - the cleaned recipe (fixes applied, timers in seconds)
+ *   fixes  - plain-language list of what was fixed
+ *   errors - [{ field, message }]; field is a path like "title",
+ *            "ingredients.2.item" or "steps.0.text" (indexes from 0)
+ */
+export function validateRecipeData(data) {
+  const errors = []
+  const fixes = []
+
+  if (data.format !== FORMAT) {
+    errors.push({ field: 'format', message: `This isn't a Keira's Kitchen recipe (format should be "${FORMAT}").` })
+  }
+  if (data.version === undefined) {
+    errors.push({ field: 'version', message: `The recipe doesn't say which format version it uses (it should be ${VERSION}).` })
+  } else if (data.version !== VERSION) {
+    errors.push({
+      field: 'version',
+      message: `This recipe uses format version ${JSON.stringify(data.version)}; only version ${VERSION} is supported.`,
+    })
+  }
+
+  const title = typeof data.title === 'string' ? data.title.trim() : ''
+  if (title === '') errors.push({ field: 'title', message: 'The recipe has no title.' })
+
+  const description = optionalText(data.description, errors, 'description', "The description isn't text.")
+  const notes = optionalText(data.notes, errors, 'notes', "The recipe notes aren't text.")
+  const source = optionalText(data.source, errors, 'source', "The source isn't text.")
+
+  const servings = readServings(data.servings, errors, fixes)
+  const prepMin = readMinutes(data.prepMin, 'prepMin', 'Prep time', errors, fixes)
+  const cookMin = readMinutes(data.cookMin, 'cookMin', 'Cooking time', errors, fixes)
+  const tags = readTags(data.tags, fixes)
+
+  let ingredients = []
+  if (!Array.isArray(data.ingredients) || data.ingredients.length === 0) {
+    errors.push({ field: 'ingredients', message: 'The recipe has no ingredients.' })
+  } else {
+    ingredients = data.ingredients.map((raw, i) => readIngredient(raw, i, errors, fixes))
+  }
+
+  let steps = []
+  if (!Array.isArray(data.steps) || data.steps.length === 0) {
+    errors.push({ field: 'steps', message: 'The recipe has no steps.' })
+  } else {
+    if (data.steps.some((raw) => typeof raw === 'string')) {
+      fixes.push('Some steps were plain text without timer details; they were read as steps with no timer.')
+    }
+    steps = data.steps.map((raw, i) => readStep(raw, i, errors, fixes))
+  }
+
+  const value = { title, description, servings, prepMin, cookMin, tags, notes, source, ingredients, steps }
+  return { value, fixes, errors }
+}
+
+/*
+ * Converts a validated value to the internal schema. Existing ids are kept
+ * where given (editing); everything else gets a new UUID. `extra` carries
+ * internal-only fields such as photoUrl and isFavourite.
+ */
+export function buildRecipe(value, { recipeId, ingredientIds = [], stepIds = [] } = {}, extra = {}) {
+  return {
+    id: recipeId ?? newId(),
+    title: value.title,
+    description: value.description,
+    servings: value.servings,
+    prepMin: value.prepMin,
+    cookMin: value.cookMin,
+    tags: value.tags,
+    photoUrl: extra.photoUrl ?? null,
+    notes: value.notes,
+    source: value.source,
+    isFavourite: extra.isFavourite ?? false,
+    ingredients: value.ingredients.map((ing, i) => ({ id: ingredientIds[i] ?? newId(), position: i + 1, ...ing })),
+    steps: value.steps.map((step, i) => ({ id: stepIds[i] ?? newId(), position: i + 1, ...step })),
+  }
 }
 
 // Prefer the contents of a ``` code block; otherwise take the first { to the last }.
@@ -161,10 +182,10 @@ function extractJson(text) {
   return body.slice(start, end + 1)
 }
 
-function optionalText(value, errors, message) {
+function optionalText(value, errors, field, message) {
   if (value === undefined || value === null) return null
   if (typeof value !== 'string') {
-    errors.push(message)
+    errors.push({ field, message })
     return null
   }
   const trimmed = value.trim()
@@ -183,23 +204,23 @@ function readNumber(value) {
 
 function readServings(value, errors, fixes) {
   if (value === undefined || value === null) {
-    errors.push("The recipe doesn't say how many servings it makes.")
+    errors.push({ field: 'servings', message: "The recipe doesn't say how many servings it makes." })
     return null
   }
   const n = readNumber(value)
   if (!n || !Number.isInteger(n.value) || n.value < 1) {
-    errors.push('Servings must be a whole number like 4.')
+    errors.push({ field: 'servings', message: 'Servings must be a whole number like 4.' })
     return null
   }
   if (n.fromText) fixes.push(`Servings "${value}" was written as text; changed to the number ${n.value}.`)
   return n.value
 }
 
-function readMinutes(value, label, errors, fixes) {
+function readMinutes(value, field, label, errors, fixes) {
   if (value === undefined || value === null) return null
   const n = readNumber(value)
   if (!n || !Number.isInteger(n.value) || n.value < 0) {
-    errors.push(`${label} must be whole minutes, like 15.`)
+    errors.push({ field, message: `${label} must be whole minutes, like 15.` })
     return null
   }
   if (n.fromText) fixes.push(`${label} "${value}" was written as text; changed to the number ${n.value}.`)
@@ -249,38 +270,41 @@ function ingredientLabel(n, item) {
   return item ? `Ingredient ${n} (${item})` : `Ingredient ${n}`
 }
 
-function readIngredient(raw, n, errors, fixes) {
+// i is the 0-based index (used in field paths); messages count from 1.
+function readIngredient(raw, i, errors, fixes) {
+  const n = i + 1
+  const field = `ingredients.${i}`
   if (raw === null || typeof raw !== 'object' || Array.isArray(raw)) {
-    errors.push(`Ingredient ${n} couldn't be read.`)
+    errors.push({ field, message: `Ingredient ${n} couldn't be read.` })
     return {}
   }
 
   const item = typeof raw.item === 'string' ? raw.item.trim() : ''
-  if (item === '') errors.push(`Ingredient ${n} has no name.`)
+  if (item === '') errors.push({ field: `${field}.item`, message: `Ingredient ${n} has no name.` })
   const label = ingredientLabel(n, item)
 
-  const group = optionalText(raw.group, errors, `${label}'s section name isn't text.`)
-  const existingNote = optionalText(raw.note, errors, `${label}'s note isn't text.`)
+  const group = optionalText(raw.group, errors, `${field}.group`, `${label}'s section name isn't text.`)
+  const existingNote = optionalText(raw.note, errors, `${field}.note`, `${label}'s note isn't text.`)
   const notePrefix = []
 
-  const quantity = readQuantity(raw.quantity, n, label, notePrefix, errors, fixes)
-  const unit = readUnit(raw.unit, label, notePrefix, errors, fixes)
+  const quantity = readQuantity(raw.quantity, n, `${field}.quantity`, label, notePrefix, errors, fixes)
+  const unit = readUnit(raw.unit, `${field}.unit`, label, notePrefix, errors, fixes)
 
   const note = [notePrefix.join(' '), existingNote].filter(Boolean).join('; ') || null
   return { quantity, unit, item, note, group }
 }
 
-function readQuantity(value, n, label, notePrefix, errors, fixes) {
+function readQuantity(value, n, field, label, notePrefix, errors, fixes) {
   if (value === undefined || value === null) return null
   if (typeof value === 'number') {
     if (!Number.isFinite(value) || value <= 0) {
-      errors.push(`Ingredient ${n}'s amount must be more than 0.`)
+      errors.push({ field, message: `Ingredient ${n}'s amount must be more than 0.` })
       return null
     }
     return value
   }
   if (typeof value !== 'string') {
-    errors.push(`Ingredient ${n}'s amount isn't a number.`)
+    errors.push({ field, message: `Ingredient ${n}'s amount isn't a number.` })
     return null
   }
 
@@ -311,7 +335,7 @@ function readQuantity(value, n, label, notePrefix, errors, fixes) {
     }
   }
 
-  errors.push(`Ingredient ${n}'s amount "${original}" isn't a number.`)
+  errors.push({ field, message: `Ingredient ${n}'s amount "${original}" isn't a number.` })
   return null
 }
 
@@ -332,10 +356,10 @@ function parseAmount(text) {
   return Math.round(value * 1000) / 1000
 }
 
-function readUnit(value, label, notePrefix, errors, fixes) {
+function readUnit(value, field, label, notePrefix, errors, fixes) {
   if (value === undefined || value === null) return null
   if (typeof value !== 'string') {
-    errors.push(`${label}'s unit isn't text.`)
+    errors.push({ field, message: `${label}'s unit isn't text.` })
     return null
   }
 
@@ -363,10 +387,12 @@ function readUnit(value, label, notePrefix, errors, fixes) {
   return null
 }
 
-function readStep(raw, n, errors, fixes) {
+function readStep(raw, i, errors, fixes) {
+  const n = i + 1
+  const field = `steps.${i}`
   const step = typeof raw === 'string' ? { text: raw } : raw
   if (step === null || typeof step !== 'object' || Array.isArray(step)) {
-    errors.push(`Step ${n} couldn't be read.`)
+    errors.push({ field, message: `Step ${n} couldn't be read.` })
     return {}
   }
 
@@ -377,16 +403,16 @@ function readStep(raw, n, errors, fixes) {
     fixes.push(`Step ${n}: removed "${numbered[0].trim()}" from the start.`)
     text = text.slice(numbered[0].length)
   }
-  if (text === '') errors.push(`Step ${n} has no instructions.`)
+  if (text === '') errors.push({ field: `${field}.text`, message: `Step ${n} has no instructions.` })
 
-  return { text, timerSeconds: readTimer(step.timerMin, n, errors, fixes) }
+  return { text, timerSeconds: readTimer(step.timerMin, n, `${field}.timerMin`, errors, fixes) }
 }
 
-function readTimer(value, n, errors, fixes) {
+function readTimer(value, n, field, errors, fixes) {
   if (value === undefined || value === null) return null
   const minutes = readNumber(value)
   if (!minutes || minutes.value <= 0) {
-    errors.push(`Step ${n}'s timer isn't a number of minutes.`)
+    errors.push({ field, message: `Step ${n}'s timer isn't a number of minutes.` })
     return null
   }
   if (minutes.fromText) fixes.push(`Step ${n}: the timer "${value}" was written as text; changed to ${minutes.value} minutes.`)

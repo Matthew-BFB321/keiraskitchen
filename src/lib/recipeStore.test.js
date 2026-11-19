@@ -1,5 +1,13 @@
 import { describe, it, expect, vi } from 'vitest'
-import { getAllRecipes, getRecipe, toggleFavourite, subscribe } from './recipeStore.js'
+import {
+  getAllRecipes,
+  getRecipe,
+  toggleFavourite,
+  subscribe,
+  addRecipe,
+  updateRecipe,
+  deleteRecipe,
+} from './recipeStore.js'
 import { findTag, MAX_TAGS } from '../config/tags.js'
 
 describe('recipeStore', () => {
@@ -32,6 +40,31 @@ describe('recipeStore', () => {
     toggleFavourite(target.id)
     expect(listener).toHaveBeenCalledTimes(2)
     toggleFavourite(target.id) // restore
+  })
+
+  it('adds, updates and deletes recipes immutably, notifying subscribers', () => {
+    const listener = vi.fn()
+    const unsubscribe = subscribe(listener)
+    const before = getAllRecipes()
+    const recipe = { ...before[0], id: 'test-recipe', title: 'Test Soup' }
+
+    addRecipe(recipe)
+    expect(getAllRecipes()).not.toBe(before)
+    expect(getAllRecipes()).toHaveLength(before.length + 1)
+    expect(getRecipe('test-recipe').title).toBe('Test Soup')
+
+    const afterAdd = getAllRecipes()
+    updateRecipe({ ...recipe, title: 'Better Soup' })
+    expect(getRecipe('test-recipe').title).toBe('Better Soup')
+    expect(getAllRecipes()).not.toBe(afterAdd)
+    expect(recipe.title).toBe('Test Soup') // original object untouched
+    expect(getAllRecipes()).toHaveLength(before.length + 1)
+
+    deleteRecipe('test-recipe')
+    expect(getRecipe('test-recipe')).toBeNull()
+    expect(getAllRecipes()).toEqual(before) // store back as it was
+    expect(listener).toHaveBeenCalledTimes(3)
+    unsubscribe()
   })
 
   it('sample recipes only use tags from the tag list, at most 3 each', () => {

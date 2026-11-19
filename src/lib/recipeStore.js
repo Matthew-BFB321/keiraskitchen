@@ -29,6 +29,22 @@ export function getRecipe(id) {
   return recipes.find((r) => r.id === id) ?? null
 }
 
+export function addRecipe(recipe) {
+  recipes = [...recipes, recipe]
+  notify()
+}
+
+// Replaces the recipe with the same id.
+export function updateRecipe(recipe) {
+  recipes = recipes.map((r) => (r.id === recipe.id ? recipe : r))
+  notify()
+}
+
+export function deleteRecipe(id) {
+  recipes = recipes.filter((r) => r.id !== id)
+  notify()
+}
+
 export function toggleFavourite(id) {
   recipes = recipes.map((r) => (r.id === id ? { ...r, isFavourite: !r.isFavourite } : r))
   notify()

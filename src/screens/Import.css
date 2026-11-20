@@ -1,0 +1,166 @@
+.import {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-2) var(--space-4) var(--space-6);
+}
+
+.import__topbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin: 0 calc(-1 * var(--space-2));
+}
+
+.import__title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+}
+
+.import__icon-button {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--tap-min);
+  height: var(--tap-min);
+  border-radius: var(--radius-lg);
+  color: var(--color-text);
+  transition: transform var(--press-duration) ease-out,
+    background-color var(--press-duration) ease-out;
+}
+
+.import__icon-button:active {
+  transform: scale(var(--press-scale));
+  background: var(--color-surface-pressed);
+}
+
+.import__help,
+.import__muted {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.import__hint {
+  margin: 0;
+  font-weight: var(--font-weight-bold);
+}
+
+.import__input {
+  width: 100%;
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--font-size-md); /* 16px stops iPhones zooming in */
+  resize: vertical;
+}
+
+.import__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: var(--tap-min);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  transition: transform var(--press-duration) ease-out,
+    background-color var(--press-duration) ease-out;
+}
+
+.import__button:active {
+  transform: scale(var(--press-scale));
+  background: var(--color-surface-pressed);
+}
+
+.import__button--primary {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.import__button--primary:active {
+  background: var(--color-primary-pressed);
+}
+
+.import__button--large {
+  min-height: var(--tap-min-cook);
+  font-size: var(--font-size-lg);
+}
+
+/* Failed check */
+.import__problems {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 2px solid var(--color-text);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.import__problems-title {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+}
+
+.import__list {
+  margin: 0;
+  padding-left: var(--space-5);
+}
+
+/* "Tidied up N things" */
+.import__fixes {
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.import__fixes-summary {
+  display: flex;
+  align-items: center;
+  min-height: var(--tap-min);
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-md);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: transform var(--press-duration) ease-out,
+    background-color var(--press-duration) ease-out;
+}
+
+.import__fixes-summary:active {
+  transform: scale(var(--press-scale));
+  background: var(--color-surface-pressed);
+}
+
+.import__fixes[open] .import__list {
+  padding-bottom: var(--space-3);
+  font-size: var(--font-size-sm);
+}
+
+/* Preview reuses the Recipe screen's layout, without its page padding */
+.recipe.import__preview {
+  padding: 0;
+}
+
+.import__serves {
+  margin: 0;
+  font-weight: var(--font-weight-bold);
+}
+
+.import__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}

@@ -14,6 +14,9 @@ import './Dialog.css'
  *
  * onDismiss (optional) handles Escape / back gesture / tapping outside.
  * Defaults to onCancel; set it when cancel isn't the safe choice.
+ *
+ * secondaryLabel + onSecondary (optional) add a third, neutral button. With
+ * three buttons they stack: secondary, confirm, cancel (they don't fit in a row).
  */
 export default function Dialog({
   open,
@@ -21,9 +24,11 @@ export default function Dialog({
   message,
   confirmLabel = 'OK',
   cancelLabel,
+  secondaryLabel,
   destructive = false,
   onConfirm,
   onCancel,
+  onSecondary,
   onDismiss,
 }) {
   const ref = useRef(null)
@@ -48,6 +53,22 @@ export default function Dialog({
     if (event.target === ref.current && cancelLabel) (onDismiss ?? onCancel)?.()
   }
 
+  const cancelButton = cancelLabel && (
+    <button type="button" className="dialog__button" onClick={onCancel}>
+      {cancelLabel}
+    </button>
+  )
+  const confirmButton = (
+    <button
+      type="button"
+      className={'dialog__button ' + (destructive ? 'dialog__button--destructive' : 'dialog__button--primary')}
+      onClick={onConfirm}
+      autoFocus={!destructive}
+    >
+      {confirmLabel}
+    </button>
+  )
+
   return (
     <dialog
       ref={ref}
@@ -60,23 +81,21 @@ export default function Dialog({
       <div className="dialog__panel">
         <h2 id={titleId} className="dialog__title">{title}</h2>
         {message && <p id={messageId} className="dialog__message">{message}</p>}
-        <div className="dialog__actions">
-          {cancelLabel && (
-            <button type="button" className="dialog__button" onClick={onCancel}>
-              {cancelLabel}
-            </button>
+        <div className={'dialog__actions' + (secondaryLabel ? ' dialog__actions--stacked' : '')}>
+          {secondaryLabel ? (
+            <>
+              <button type="button" className="dialog__button" onClick={onSecondary}>
+                {secondaryLabel}
+              </button>
+              {confirmButton}
+              {cancelButton}
+            </>
+          ) : (
+            <>
+              {cancelButton}
+              {confirmButton}
+            </>
           )}
-          <button
-            type="button"
-            className={
-              'dialog__button ' +
-              (destructive ? 'dialog__button--destructive' : 'dialog__button--primary')
-            }
-            onClick={onConfirm}
-            autoFocus={!destructive}
-          >
-            {confirmLabel}
-          </button>
         </div>
       </div>
     </dialog>

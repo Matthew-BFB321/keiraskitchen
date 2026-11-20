@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
-import { useRecipe, addRecipe, updateRecipe, deleteRecipe } from '../lib/recipeStore.js'
+import { useRecipe, getAllRecipes, addRecipe, updateRecipe, deleteRecipe } from '../lib/recipeStore.js'
+import { findByTitle } from '../lib/duplicates.js'
 import { emptyForm, recipeToForm, saveForm, previewForm } from '../lib/recipeForm.js'
 import { formatAmount } from '../lib/quantities.js'
 import { formatTotalTime } from '../lib/libraryFilters.js'
 import { TAGS, MAX_TAGS } from '../config/tags.js'
 import Dialog from '../components/Dialog.jsx'
+import DuplicateDialog from '../components/DuplicateDialog.jsx'
 import './RecipeBuilder.css'
 
 /*
@@ -37,6 +39,7 @@ function Builder({ id }) {
   const [form, setForm] = useState(initial)
   const [submitted, setSubmitted] = useState(false)
   const [confirm, setConfirm] = useState(null) // 'discard' | 'delete' | null
+  const [duplicate, setDuplicate] = useState(null) // { existing, recipe } when a new recipe's title is taken
 
   if (!form) {
     return (
@@ -75,9 +78,22 @@ function Builder({ id }) {
       window.scrollTo({ top: 0, behavior: 'smooth' })
       return
     }
-    if (isEdit) updateRecipe(result.recipe)
-    else addRecipe(result.recipe)
-    navigate(`/recipe/${result.recipe.id}`, { replace: true })
+    if (isEdit) {
+      // Editing never checks titles: it would always match itself.
+      updateRecipe(result.recipe)
+    } else {
+      const sameTitle = findByTitle(getAllRecipes(), result.recipe.title)
+      if (sameTitle) {
+        setDuplicate({ existing: sameTitle, recipe: result.recipe })
+        return
+      }
+      addRecipe(result.recipe)
+    }
+    goToRecipe(result.recipe.id)
+  }
+
+  function goToRecipe(recipeId) {
+    navigate(`/recipe/${recipeId}`, { replace: true })
   }
 
   function handleCancel() {
@@ -330,6 +346,12 @@ function Builder({ id }) {
         destructive
         onCancel={() => setConfirm(null)}
         onConfirm={handleDelete}
+      />
+      <DuplicateDialog
+        existing={duplicate?.existing ?? null}
+        recipe={duplicate?.recipe}
+        onSaved={goToRecipe}
+        onCancel={() => setDuplicate(null)}
       />
     </main>
   )

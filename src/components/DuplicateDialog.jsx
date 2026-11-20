@@ -16,15 +16,16 @@ export default function DuplicateDialog({ existing, recipe, onSaved, onCancel })
         .replace(/, ([^,]*)$/, ' and $1')
     : ''
 
+  // The store returns false when offline (a toast explains); just close then.
   function saveCopy() {
     const saved = { ...recipe, title: copy }
-    addRecipe(saved)
-    onSaved(saved.id)
+    if (addRecipe(saved)) onSaved(saved.id)
+    else onCancel()
   }
 
   function replace() {
-    updateRecipe(replaceWith(existing, recipe))
-    onSaved(existing.id)
+    if (updateRecipe(replaceWith(existing, recipe))) onSaved(existing.id)
+    else onCancel()
   }
 
   return (

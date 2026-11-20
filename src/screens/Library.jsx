@@ -1,5 +1,8 @@
 import { useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useRecipes } from '../lib/recipeStore.js'
+import { signOut } from '../lib/auth.js'
+import Dialog from '../components/Dialog.jsx'
 import { findTag } from '../config/tags.js'
 import { filterRecipes, sortByTitle, usedTags } from '../lib/libraryFilters.js'
 import RecipeCard from '../components/RecipeCard.jsx'
@@ -12,6 +15,8 @@ export default function Library() {
   const [query, setQuery] = useState('')
   const [tag, setTag] = useState(null)
   const [addOpen, setAddOpen] = useState(false)
+  const [logoutOpen, setLogoutOpen] = useState(false)
+  const navigate = useNavigate()
 
   const tags = useMemo(() => usedTags(recipes), [recipes])
   const results = useMemo(() => sortByTitle(filterRecipes(recipes, { query, tag })), [recipes, query, tag])
@@ -21,6 +26,12 @@ export default function Library() {
   function clearSearch() {
     setQuery('')
     setTag(null)
+  }
+
+  async function handleLogout() {
+    setLogoutOpen(false)
+    await signOut()
+    navigate('/login', { replace: true })
   }
 
   return (
@@ -95,6 +106,19 @@ export default function Library() {
       <Sheet open={addOpen} title="Add a recipe" onClose={() => setAddOpen(false)}>
         <AddRecipeOptions />
       </Sheet>
+
+      <button type="button" className="library__logout" onClick={() => setLogoutOpen(true)}>
+        Log out
+      </button>
+      <Dialog
+        open={logoutOpen}
+        title="Log out?"
+        message="You'll need your email and password to log back in."
+        cancelLabel="Cancel"
+        confirmLabel="Log out"
+        onCancel={() => setLogoutOpen(false)}
+        onConfirm={handleLogout}
+      />
     </main>
   )
 }

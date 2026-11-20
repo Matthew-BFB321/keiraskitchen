@@ -1,0 +1,33 @@
+/* Sits above the fixed bottom bars (Start cooking / Done, next) */
+.toast-region {
+  position: fixed;
+  left: var(--space-4);
+  right: var(--space-4);
+  bottom: calc(var(--tap-min-cook) + var(--space-6) + var(--space-4) + env(safe-area-inset-bottom));
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.toast {
+  pointer-events: auto;
+  max-width: 400px;
+  min-height: var(--tap-min);
+  padding: var(--space-3) var(--space-4);
+  border: none;
+  border-radius: var(--radius-md);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  box-shadow: var(--shadow-sheet);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: transform var(--press-duration) ease-out,
+    background-color var(--press-duration) ease-out;
+}
+
+.toast:active {
+  transform: scale(var(--press-scale));
+  background: var(--color-primary-pressed);
+}

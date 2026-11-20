@@ -78,16 +78,17 @@ function Builder({ id }) {
       window.scrollTo({ top: 0, behavior: 'smooth' })
       return
     }
+    // Store calls return false when offline (a toast explains); stay on the form then.
     if (isEdit) {
       // Editing never checks titles: it would always match itself.
-      updateRecipe(result.recipe)
+      if (!updateRecipe(result.recipe)) return
     } else {
       const sameTitle = findByTitle(getAllRecipes(), result.recipe.title)
       if (sameTitle) {
         setDuplicate({ existing: sameTitle, recipe: result.recipe })
         return
       }
-      addRecipe(result.recipe)
+      if (!addRecipe(result.recipe)) return
     }
     goToRecipe(result.recipe.id)
   }
@@ -102,8 +103,8 @@ function Builder({ id }) {
   }
 
   function handleDelete() {
-    navigate('/', { replace: true })
-    deleteRecipe(id)
+    if (deleteRecipe(id)) navigate('/', { replace: true })
+    else setConfirm(null)
   }
 
   const deleteMessage = existing

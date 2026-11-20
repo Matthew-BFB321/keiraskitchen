@@ -140,3 +140,25 @@
   transform: scale(var(--press-scale));
   background: var(--color-surface-pressed);
 }
+
+/* Small, out of the way at the very bottom */
+.library__logout {
+  align-self: center;
+  min-height: var(--tap-min);
+  margin-top: var(--space-6);
+  padding: 0 var(--space-4);
+  border: none;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--color-text-muted);
+  font: inherit;
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: transform var(--press-duration) ease-out,
+    background-color var(--press-duration) ease-out;
+}
+
+.library__logout:active {
+  transform: scale(var(--press-scale));
+  background: var(--color-surface-pressed);
+}

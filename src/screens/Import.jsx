@@ -80,8 +80,7 @@ export default function Import() {
       setDuplicateOf(existing)
       return
     }
-    addRecipe(recipe)
-    goToRecipe(recipe.id)
+    if (addRecipe(recipe)) goToRecipe(recipe.id) // false offline: the store explains in a toast
   }
 
   const passed = result?.ok === true

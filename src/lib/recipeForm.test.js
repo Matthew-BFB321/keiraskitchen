@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest'
 import { emptyForm, recipeToForm, saveForm, previewForm, formToImport } from './recipeForm.js'
-import { getAllRecipes } from './recipeStore.js'
+import samples from '../data/recipes.json'
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/
-const sample = (title) => getAllRecipes().find((r) => r.title === title)
+const sample = (title) => samples.recipes.find((r) => r.title === title)
 
 const filledForm = (overrides = {}) => ({
   ...emptyForm(),
@@ -22,7 +22,7 @@ const content = (recipe) => ({
 })
 
 describe('recipe → text → recipe round trip', () => {
-  it.each(getAllRecipes().map((r) => [r.title]))('%s comes back the same', (title) => {
+  it.each(samples.recipes.map((r) => [r.title]))('%s comes back the same', (title) => {
     const original = sample(title)
     const result = saveForm(recipeToForm(original), original)
     expect(result.ok).toBe(true)

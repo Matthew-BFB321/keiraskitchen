@@ -3,10 +3,13 @@
 Personal recipe web app (installable PWA) for Keira. Purpose: get her from
 "I want to make that" to step 1 on screen faster than asking ChatGPT.
 
-- Stack: React + Vite, React Router, vite-plugin-pwa (`registerType: 'autoUpdate'`). No backend yet.
+- Stack: React + Vite, React Router, vite-plugin-pwa (`registerType: 'autoUpdate'`),
+  Supabase (email/password login + `recipes` table, SQL in `supabase/migrations/`).
+  Keys come from `.env.local` / Vercel env vars (`VITE_SUPABASE_URL`,
+  `VITE_SUPABASE_ANON_KEY`); never the secret/service_role key.
 - Designed mobile-first at **360px** wide.
 - Production: https://keiraskitchen.vercel.app
-- Sample data: `src/data/recipes.json` (`schemaVersion: 1`). Units are metric
+- Sample data (tests only, not in Supabase): `src/data/recipes.json` (`schemaVersion: 1`). Units are metric
   as used in South Africa: g, kg, ml, l, tsp, tbsp; oven temperatures in °C.
 - Decisions log: `docs/decisions.md`. Ideas: `docs/backlog.md`.
   Recipe import/export format: `docs/recipe-format.md`.

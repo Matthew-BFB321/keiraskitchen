@@ -15,3 +15,6 @@ dev-dist/
 Thumbs.db
 .vscode/*
 !.vscode/extensions.json
+
+# Local env files (Supabase keys go in .env.local)
+!.env.example

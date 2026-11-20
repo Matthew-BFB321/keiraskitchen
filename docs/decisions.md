@@ -81,3 +81,34 @@ Home Screen", runs full-screen, works offline, and updates by simply deploying.
 - Editing keeps the recipe id, photo and favourite, but ingredient and step
   ids are regenerated on every save (rows no longer have an identity of their
   own). Cook-mode ticks for a recipe edited mid-cook don't carry over.
+
+## 2026-11-20: Recipes stored in Supabase, with email/password login
+
+- **Storage:** one Supabase table, `recipes`, with **one row per recipe**:
+  `id`, `user_id`, `schema_version`, `title`, `is_favourite`, timestamps, and
+  a `data` JSON column holding everything else (description, servings, times,
+  tags, ingredients, steps, notes, source, photoUrl). SQL:
+  `supabase/migrations/001_recipes.sql`.
+- **Why one row with JSON instead of three tables (recipes, ingredients,
+  steps):** a recipe is always saved and read as a whole. One row means each
+  save is a single atomic write, so a recipe can never be left half-saved
+  (e.g. new ingredients but old steps) if the connection drops mid-save. It
+  also needs no joins, mirrors the import format, and keeps ingredient and
+  step order exactly as stored. `schema_version` lets the JSON shape be
+  migrated later. Title and favourite get their own columns because the
+  Library lists and toggles them.
+- **Security:** row level security limits every user to rows where
+  `user_id = auth.uid()` for select, insert, update and delete. The two
+  accounts are separate: each sees only its own recipes (no shared household
+  collection). The browser only ever has the publishable (anon) key, which is
+  safe with RLS; the secret/service_role key is never used in the app.
+- **Login:** email and password only; accounts are created in the Supabase
+  dashboard and public sign-ups are off. supabase-js keeps the session on the
+  phone and refreshes it, so Keira stays logged in.
+- **Saving feels instant:** the screen updates straight away; if Supabase then
+  fails, that one change is undone and a toast says so.
+- **Offline:** the last loaded recipes are kept in localStorage, so the app
+  still opens and shows recipes with no signal (read only; changes are
+  refused with a message). Logging out removes that copy from the phone.
+- **Sample recipes** (`src/data/recipes.json`) are test data only and are not
+  put into Supabase.

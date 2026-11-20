@@ -62,3 +62,22 @@ Home Screen", runs full-screen, works offline, and updates by simply deploying.
   list ignoring case, and unknown tags are dropped and listed as fixes.
 - The Library only shows chips for tags that at least one recipe uses.
 - Recipe format rules bumped to v1.2 (format version stays 1).
+
+## 2026-11-20: Recipe builder uses plain text
+
+- Ingredients and steps are typed as two plain text boxes, one ingredient or
+  step per line, instead of a card per row with move/remove buttons. Each box
+  shows a live "Read as" preview of exactly what Save will store.
+- Ingredient lines: optional amount ("1/2", "1 1/2", "½", "2-3"), optional
+  unit (allowed units and the importer's synonyms), then the item; anything
+  after the first comma is the note. A line ending in ":" starts a section.
+  Amounts and units go through the importer's own rules and validator.
+- Step lines: leading numbers ("1.", "Step 2:") are removed. The first time
+  mentioned ("10 minutes", "1 hr 30 min", "an hour") becomes the step's timer
+  if it's 2 minutes or more. A line can end with "(timer 5 min)" to set a timer
+  the text doesn't mention, or "(no timer)" to turn one off; the mark is not
+  saved in the step text. Editing adds these marks where needed so timers
+  survive a round trip.
+- Editing keeps the recipe id, photo and favourite, but ingredient and step
+  ids are regenerated on every save (rows no longer have an identity of their
+  own). Cook-mode ticks for a recipe edited mid-cook don't carry over.

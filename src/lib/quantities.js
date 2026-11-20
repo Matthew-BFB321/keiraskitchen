@@ -27,14 +27,18 @@ function formatNumber(value, unit) {
   return whole === 0 ? glyph : `${whole}${glyph}`
 }
 
+// "clove" → "cloves" above 1; g, ml, tsp etc. never change.
+export function unitLabel(unit, value) {
+  return value > 1 && PLURALS[unit] ? PLURALS[unit] : unit
+}
+
 // 7 g → "7 g", 2 clove → "2 cloves", 0.5 tbsp → "½ tbsp", 4 (no unit) → "4". Null quantity → null.
 export function formatAmount(value, unit) {
   if (value == null) return null
   const rounded = roundForUnit(value, unit)
   const number = formatNumber(rounded, unit)
   if (!unit) return number
-  const unitText = rounded > 1 && PLURALS[unit] ? PLURALS[unit] : unit
-  return `${number} ${unitText}`
+  return `${number} ${unitLabel(unit, rounded)}`
 }
 
 // Ungrouped ingredients first, then each group in the order it first appears.

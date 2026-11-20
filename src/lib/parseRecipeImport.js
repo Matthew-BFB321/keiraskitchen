@@ -314,29 +314,53 @@ function readQuantity(value, n, field, label, notePrefix, errors, fixes) {
     return null
   }
 
-  const single = parseAmount(original)
-  if (single !== null) {
+  const read = readQuantityText(original)
+  if (read && read.range) {
+    notePrefix.push(original)
+    fixes.push(`${label}: the amount "${original}" is a range; used ${read.value} and kept "${original}" in the note.`)
+    return read.value
+  }
+  if (read) {
     fixes.push(
       /^\d+(\.\d+)?$/.test(original)
-        ? `${label}: the amount "${original}" was written as text; changed to the number ${single}.`
-        : `${label}: changed the amount "${original}" to ${single}.`,
+        ? `${label}: the amount "${original}" was written as text; changed to the number ${read.value}.`
+        : `${label}: changed the amount "${original}" to ${read.value}.`,
     )
-    return single
+    return read.value
   }
+
+  errors.push({ field, message: `Ingredient ${n}'s amount "${original}" isn't a number.` })
+  return null
+}
+
+/*
+ * Reads an amount written as text: "2", "1.5", "1,5", "1/2", "1 1/2", "½",
+ * "1½", or a range "2-3" / "2 to 3" (value is the first number, range the
+ * original text). Null if it isn't an amount. Shared with the recipe builder.
+ */
+export function readQuantityText(text) {
+  const original = String(text).trim()
+  const single = parseAmount(original)
+  if (single !== null) return { value: single, range: null }
 
   const parts = original.split(/\s*(?:-|–|—|\bto\b)\s*/i)
   if (parts.length === 2) {
     const low = parseAmount(parts[0])
     const high = parseAmount(parts[1])
-    if (low !== null && high !== null) {
-      notePrefix.push(original)
-      fixes.push(`${label}: the amount "${original}" is a range; used ${low} and kept "${original}" in the note.`)
-      return low
-    }
+    if (low !== null && high !== null) return { value: low, range: original }
   }
-
-  errors.push({ field, message: `Ingredient ${n}'s amount "${original}" isn't a number.` })
   return null
+}
+
+/*
+ * An allowed unit for a word ("cups" → "cup", "Tbsp" → "tbsp"), or undefined.
+ * Words meaning "no unit" (whole, piece, each) are not treated as units here,
+ * so typed text like "1 whole chicken" keeps them in the item.
+ */
+export function normalizeUnit(word) {
+  const lower = String(word).trim().toLowerCase()
+  if (UNITS.includes(lower)) return lower
+  return UNIT_ALIASES[lower] ?? undefined
 }
 
 // "2", "1.5", "1,5", "1/2", "1 1/2", "½", "1½" → number, or null if not an amount.
@@ -396,16 +420,23 @@ function readStep(raw, i, errors, fixes) {
     return {}
   }
 
-  let text = typeof step.text === 'string' ? step.text.trim() : ''
-  // "1. ", "2) ", "Step 3: " but not "1.5 litres" or "2-3 minutes"
-  const numbered = text.match(/^(?:step\s+\d+\s*[.):-]?|\d+[.)])\s+/i)
-  if (numbered && numbered[0].length < text.length) {
-    fixes.push(`Step ${n}: removed "${numbered[0].trim()}" from the start.`)
-    text = text.slice(numbered[0].length)
-  }
+  const stripped = stripStepNumber(typeof step.text === 'string' ? step.text : '')
+  const text = stripped.text
+  if (stripped.removed) fixes.push(`Step ${n}: removed "${stripped.removed}" from the start.`)
   if (text === '') errors.push({ field: `${field}.text`, message: `Step ${n} has no instructions.` })
 
   return { text, timerSeconds: readTimer(step.timerMin, n, `${field}.timerMin`, errors, fixes) }
+}
+
+// Removes a leading "1. ", "2) " or "Step 3: " but not "1.5 litres" or "2-3 minutes".
+// Returns { text, removed } (removed is null when nothing was stripped).
+export function stripStepNumber(value) {
+  const text = String(value).trim()
+  const numbered = text.match(/^(?:step\s+\d+\s*[.):-]?|\d+[.)])\s+/i)
+  if (numbered && numbered[0].length < text.length) {
+    return { text: text.slice(numbered[0].length), removed: numbered[0].trim() }
+  }
+  return { text, removed: null }
 }
 
 function readTimer(value, n, field, errors, fixes) {

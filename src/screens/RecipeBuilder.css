@@ -161,8 +161,7 @@
   text-align: center;
 }
 
-.builder__round-button,
-.builder__icon-button {
+.builder__round-button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -180,20 +179,17 @@
     background-color var(--press-duration) ease-out;
 }
 
-.builder__round-button:active,
-.builder__icon-button:active {
+.builder__round-button:active {
   transform: scale(var(--press-scale));
   background: var(--color-surface-pressed);
 }
 
-.builder__round-button:disabled,
-.builder__icon-button:disabled {
+.builder__round-button:disabled {
   color: var(--color-border);
   cursor: default;
 }
 
-.builder__round-button:disabled:active,
-.builder__icon-button:disabled:active {
+.builder__round-button:disabled:active {
   transform: none;
   background: var(--color-surface);
 }
@@ -248,51 +244,6 @@
   font-size: var(--font-size-sm);
 }
 
-/* Ingredient and step cards */
-.builder__list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.builder__card {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-  padding: var(--space-3);
-  border-radius: var(--radius-md);
-  background: var(--color-surface);
-}
-
-.builder__card--section {
-  background: var(--color-chip);
-}
-
-.builder__ingredient-line {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-2);
-}
-
-.builder__timer {
-  max-width: 50%;
-}
-
-.builder__controls {
-  display: flex;
-  justify-content: flex-end;
-  gap: var(--space-2);
-}
-
-.builder__add-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-}
-
 .builder__button {
   display: flex;
   align-items: center;
@@ -314,6 +265,72 @@
 .builder__button:active {
   transform: scale(var(--press-scale));
   background: var(--color-surface-pressed);
+}
+
+/* Plain-text boxes and their read-only preview */
+.builder__lines {
+  min-height: calc(var(--tap-min) * 4);
+}
+
+.builder__preview {
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.builder__preview-title {
+  margin: 0 0 var(--space-2);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-muted);
+}
+
+.builder__preview-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.builder__preview-heading {
+  margin-top: var(--space-2);
+  font-weight: var(--font-weight-bold);
+}
+
+.builder__preview-item,
+.builder__preview-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+}
+
+.builder__preview-step {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.builder__preview-number {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-5);
+  height: var(--space-5);
+  border-radius: 50%;
+  background: var(--color-chip);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+.builder__badge {
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-sm);
+  background: var(--color-chip);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
 }
 
 /* Red: deleting loses data */
